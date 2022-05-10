@@ -22,8 +22,8 @@ public class ApplicationDbContext : IdentityDbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // modelBuilder.Entity<IdentityUser>().ToTable("Users");
-        // modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+        modelBuilder.Entity<IdentityUser>().ToTable("Users");
+        modelBuilder.Entity<IdentityRole>().ToTable("Roles");
         // modelBuilder.Entity<IdentityUserRole>().ToTable("Roles");
 
     }

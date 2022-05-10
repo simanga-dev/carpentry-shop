@@ -40,25 +40,19 @@ using (var scope = app.Services.CreateScope())
     // DbInitializer.Initialize(context);
 }
 
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+app.UseAuthorization();
 
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     await SampleData.InitializeAsync(services);
 }
-
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-
-// SeedData.Seed().Wait();
 
 app.MapRazorPages();
 
