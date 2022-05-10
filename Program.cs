@@ -36,11 +36,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-
-
     
-SeedData.Seed().Wait();
+// SeedData.Seed().Wait();
 
 app.MapRazorPages();
 
