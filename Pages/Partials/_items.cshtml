@@ -1,59 +1,75 @@
+@page
+@model IndexModel
+
 <div style="margin-top: 50px;">
     <h4 class="ui dividing header">
-        <i class="money box icon"></i>
+        <i class="box icon"></i>
         <div class="content">
-            box Dimension
+            Box Dimension
         </div>
     </h4>
-    <div id="box-item">
-        <div id="starter-item">
-            <div class="box-item">
-            <div class="four fields box-item">
-                <div class="field">
-                    <label>Inside Length <span class="required">*</span> (L) </label>
-                    <input type="text" maxlength="500" placeholder="Enter Value" required>
+    <div id="box-boxe">
+        <div id="starter-boxe">
+            <div class="box-boxe">
+                <div class="four fields">
+                    <div class="field">
+                        <label>Inside Length <span class="required">*</span> (L) </label>
+                        <input type="number" name="Boxes[0].InsideLength" maxlength="500" placeholder="Enter Value"
+                            required>
+                    </div>
+                    <div class="field">
+                        <label>Inside Width <span class="required">*</span> (W)</label>
+                        <input type="number" name="Boxes[0].InsideWidth" pattern="^\d*(\.\d{0,2})?$" step="0.01" min="0"
+                            placeholder="Enter value" required>
+                    </div>
+                    <div class="field">
+                        <label>Inside Height <span class="required">*</span> (H)</label>
+                        <input type="number" name="Boxes[0].InsideHeight" pattern="^\d*(\.\d{0,2})?$" step="0.01"
+                            min="0" placeholder="Enter value" required="">
+                    </div>
+                    <div class="field">
+                        <label>Number of Box <span class="required">*</span> </label>
+                        <input type="number" name="Boxes[0].NumberOfBox" pattern="^\d*(\.\d{0,2})?$" step="0.01" min="0"
+                            placeholder="Enter value" required="">
+                    </div>
                 </div>
-                <div class="field">
-                    <label>Inside Width <span class="required">*</span> (W)</label>
-                    <input type="number" pattern="^\d*(\.\d{0,2})?$" step="0.01" min="0" placeholder="Enter value" required>
-                </div>
-                <div class="field">
-                    <label>Inside Height <span class="required">*</span> (H)</label>
-                    <input type="number" pattern="^\d*(\.\d{0,2})?$" step="0.01" min="0" placeholder="Enter value" required="">
-                </div>
-<div class="field">
-                    <label>Number of Box <span class="required">*</span> </label>
-                    <input type="number" pattern="^\d*(\.\d{0,2})?$" step="0.01" min="0" placeholder="Enter value" required="">
-                </div>
-            </div>
-<div class="three fields">
-                    <div class="fields">
-                        <label>Do you want a footer? </label>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="Fees[0].Footer" checked="" tabindex="0" class="hidden" value="Price">
-                                <label>Price</label>
+                <div class="grouped">
+                    <div class="field">
+                        <div class="fields">
+                            <label>Do you want lid? &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="Boxes[0].isLid" checked="" tabindex="0" class="hidden"
+                                        value="true">
+                                    <label>Yes</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="Fees[0].Footer" tabindex="0" class="hidden" value="Percentage">
-                                <label>Percentage</label>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="Boxes[0].isLid" tabindex="0" class="hidden" value="false">
+                                    <label>No</label>
+                                </div>
                             </div>
                         </div>
                     </div>
-<div class="fields">
-                        <label>Do you want a lid? </label>
+                    <div class="fields">
                         <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="Fees[0].PercentageOrPrice" checked="" tabindex="0" class="hidden" value="Price">
-                                <label>Price</label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="Fees[0].PercentageOrPrice" tabindex="0" class="hidden" value="Percentage">
-                                <label>Percentage</label>
+                            <div class="fields">
+                                <label>Do you want footer? &nbsp; </label>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="Boxes[0].isFoot" checked="" tabindex="0"
+                                            class="hidden" value="true">
+                                        <label>Yes</label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="Boxes[0].isFoot" tabindex="0" class="hidden"
+                                            value="false">
+                                        <label>No</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -61,15 +77,14 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="mt-2">
-    <div class="fluid ui button" onclick="addRow('item')">
-        <i class="plus icon"></i> Add Additional Box
+    <div class="mt-2">
+        <div class="fluid ui button" onclick="addRow('boxe')">
+            <i class="plus icon"></i> Add Additional Box
+        </div>
     </div>
-</div>
-<div id="remove-item" class="mt-2" style="display: none;">
-    <div class="fluid ui button red" onclick="removeRow('item')">
-        <i class="minus icon"></i> Remove Last Box
+    <div id="remove-boxe" class="mt-2" style="display: none;">
+        <div class="fluid ui button red" onclick="removeRow('boxe')">
+            <i class="minus icon"></i> Remove Last Box
+        </div>
     </div>
 </div>

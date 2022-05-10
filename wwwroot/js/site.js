@@ -31,6 +31,9 @@ function addRow(type) {
     showOrHideRemoveButton(type, true);
 }
 
+
+    $('.ui.radio.checkbox').checkbox();
+
 function removeRow(type) {
     let count = $('.box-' + type).length;
     let lastItem = $('.box-' + type)[count - 1].remove();
@@ -44,10 +47,10 @@ function showOrHideRemoveButton(type, show) {
 
 $(function () {
     $('.datepicker').datepicker({ dateFormat: 'MM d, yy' });
-    $('.ui.radio.checkbox').checkbox();
+    $('.ui.radio.checkboxe').checkbox();
     
     $('#generate').click(function () {
-        let valid = $('#box-form')[0].checkValidity();
+        let valid = $('#boxe-form')[0].checkValidity();
         if (valid) {
             let element = $(this);
             element.addClass('loading');
