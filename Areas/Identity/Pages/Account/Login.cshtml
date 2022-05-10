@@ -1,0 +1,40 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <div class="yoo">
+            <form class="ui form" id="account" method="post">
+
+                <h4 class="header">Log In</h4>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="field">
+                    <i class="user icon"></i>
+                    <input asp-for="Input.Email" placeholder="E-mail address" autocomplete="username" aria-required="true" />
+                    <!-- <label asp-for="Input.Email" class="form-label"></label> -->
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="field">
+                    <input asp-for="Input.Password" placeholder="Password" autocomplete="current-password" aria-required="true" />
+                    <!--<label asp-for="Input.Password" class="form-label"></label> -->
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="field">
+                <div class="ui fluid large grey submit button">Login</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

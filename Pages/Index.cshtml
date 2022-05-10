@@ -4,7 +4,97 @@
     ViewData["Title"] = "Home page";
 }
 
+
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h2 class="header">Welcome To Carpentry Shop </h2>
+    <img src="~/fig-1.png" />
 </div>
+
+
+    <form id="invoice-form" class="ui form" asp-action="GenerateInvoice">
+
+<div style="margin-top: 20px;">
+    <h4 class="ui dividing header">
+        <i class="building icon"></i>
+        <div class="content">
+           Box Dimesion
+        </div>
+    </h4>
+
+<div class="four fields">
+        <div class="field">
+            <label>Inside Length <span class="required">*</span> (L)</label>
+            <input type="text" maxlength="255" placeholder="Please enter value" required>
+        </div>
+        <div class="field">
+            <label>Inside Width <span class="required">*</span> (L)</label>
+            <input type="text" maxlength="255" placeholder="Please enter value">
+        </div>
+        <div class="field">
+            <label>Inside Height <span class="required">*</span> (H)</label>
+            <input type="text" maxlength="255" placeholder="Please enter value">
+        </div>
+        <div class="field">
+            <label>Number of Boxes<span class="required">*</span></label>
+            <input type="text" maxlength="255" placeholder="Please enter value" required>
+        </div>
+    </div>
+</div>
+
+<div class="two fields">
+<div class="field">
+                    <div class="grouped fields">
+                        <label>Lid (yes/no)</label>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" checked="" tabindex="0" class="hidden" value="Price">
+                                <label>Price</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" tabindex="0" class="hidden" value="Percentage">
+                                <label>Percentage</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+<div class="field">
+                    <div class="grouped fields">
+                        <label>Foot (yes/no)</label>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="Fees[0].PercentageOrPrice" checked="" tabindex="0" class="hidden" value="Price">
+                                <label>Price</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="Fees[0].PercentageOrPrice" tabindex="0" class="hidden" value="Percentage">
+                                <label>Percentage</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                </div>
+
+
+<div class="mt-2">
+    <div class="fluid ui button" onclick="addRow('item')">
+        <i class="plus icon"></i> Add Additional Box
+    </div>
+</div>
+<div id="remove-item" class="mt-2" style="display: none;">
+    <div class="fluid ui button red" onclick="removeRow('item')">
+        <i class="minus icon"></i> Remove Last Box
+    </div>
+</div>
+
+
+
+    </form>
+
