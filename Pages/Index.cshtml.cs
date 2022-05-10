@@ -32,10 +32,10 @@ public class IndexModel : PageModel
         for (int i = 0; i < Boxes.Count(); i++)
         {
             System.Console.WriteLine("Hello World");
-         System.Console.WriteLine(Customer.Name);
-         System.Console.WriteLine(Customer.Department);
-         System.Console.WriteLine(Customer.Email);
-         // System.Console.WriteLine(Customer.);
+            System.Console.WriteLine(Customer.Name);
+            System.Console.WriteLine(Customer.Department);
+            System.Console.WriteLine(Customer.Email);
+            // System.Console.WriteLine(Customer.);
 
         }
 
@@ -68,5 +68,5 @@ public class Customer
     public string Email { get; set; } = "";
     public string Name { get; set; } = "";
     public string Department { get; set; } = "";
-        
+
 }
