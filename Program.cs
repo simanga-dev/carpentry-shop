@@ -14,7 +14,10 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+        {
+            options.Conventions.AuthorizePage("/Admin");
+        });
 
 var app = builder.Build();
 
@@ -34,7 +37,6 @@ else
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-
     var context = services.GetRequiredService<ApplicationDbContext>();
     context.Database.EnsureCreated();
     // DbInitializer.Initialize(context);

@@ -11,5 +11,4 @@ public class Box
     public string InsideHeight { get; set; }
     public Boolean isLid { get; set; }
     public Boolean isFoot { get; set; }
-
 }

@@ -10,4 +10,9 @@ public class Order
     // [Index(IsUnique = true)]
     public string Ref { get; set; }
 
+    public Order()
+    {
+        this.Date = DateTime.UtcNow;
+    }
+
 }

@@ -15,22 +15,23 @@
                     <div class="field">
                         <label>Inside Length <span class="required">*</span> (L) </label>
                         <input type="number" name="Boxes[0].InsideLength" maxlength="500" placeholder="Enter Value"
-                            required>
+                         data-validate-number>
+
                     </div>
                     <div class="field">
                         <label>Inside Width <span class="required">*</span> (W)</label>
                         <input type="number" name="Boxes[0].InsideWidth" pattern="^\d*(\.\d{0,2})?$" step="0.01" min="0"
-                            placeholder="Enter value" required>
+                            placeholder="Enter value">
                     </div>
                     <div class="field">
                         <label>Inside Height <span class="required">*</span> (H)</label>
                         <input type="number" name="Boxes[0].InsideHeight" pattern="^\d*(\.\d{0,2})?$" step="0.01"
-                            min="0" placeholder="Enter value" required="">
+                            min="0" placeholder="Enter value">
                     </div>
                     <div class="field">
                         <label>Number of Box <span class="required">*</span> </label>
                         <input type="number" name="Boxes[0].NumberOfBox" pattern="^\d*(\.\d{0,2})?$" step="0.01" min="0"
-                            placeholder="Enter value" required="">
+                            placeholder="Enter value"="">
                     </div>
                 </div>
                 <div class="grouped">
@@ -88,3 +89,5 @@
         </div>
     </div>
 </div>
+
+

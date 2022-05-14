@@ -3,6 +3,10 @@
     /* background-color: red; */
 }
 
+label span {
+    color: red;
+}
+
 html {
   font-size: 14px;
 }
@@ -20,4 +24,8 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.logo .logo-img {
+    height: 3.8rem !important;
 }

@@ -12,20 +12,37 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-dark navbar-dark mb-3">
-            <div class="container justify-content-between">
-                <!-- <div class="logo"> -->
-                    <!-- <img class="logo-img" src="~/logo.png"> -->
-                    <a class="navbar-brand" asp-area="" asp-page="/Index">Carpentry Shop</a>
-                <!-- </div> -->
-                <partial name="_LoginPartial" />
-            </div>
-        </nav>
-    </header>
-    <main style="height:100%;">
-        @RenderBody()
-    </main>
+    <div class="ui visible sidebar inverted vertical menu">
+
+        <div class="item">
+            <a class="ui logo" href="/">
+                <img class="logo-img" src="~/logo.png">
+            </a>
+            <a href="/"><b>Carpentry Shop</b></a>
+        </div>
+
+        <a class="item">
+            <b>Open Orders</b>
+        </a>
+        <a class="item">
+            <b>All Orders</b>
+        </a>
+
+
+        <partial name="_LoginPartial" />
+
+    </div>
+    <div class="pusher">
+        <!-- Site content !-->
+        <div class="main">
+
+            @RenderBody()
+
+        </div>
+
+    </div>
+
+
 
     <!--
     <footer class="border-top footer text-muted">
@@ -41,7 +58,9 @@
     <script src="~/lib/semantic-ui/semantic.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 
 </html>

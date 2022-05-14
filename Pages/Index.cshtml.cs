@@ -1,29 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CarpentryShop.Data;
+using CarpentryShop.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CarpentryShop.Pages;
 
 public class IndexModel : PageModel
 {
+    private readonly ApplicationDbContext _context;
     private readonly ILogger<IndexModel> _logger;
 
     public string Message { get; private set; } = "PageModel in C#";
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(ILogger<IndexModel> logger, 
+            ApplicationDbContext context)
     {
 
+        _context = context;
         _logger = logger;
     }
 
     public void OnGet()
     {
-        Message += $" Server time is { DateTime.Now }";
 
     }
 
 
     [BindProperty]
-    public List<BoxItem> Boxes { get; set; }
+    public List<Box> Boxes { get; set; }
     [BindProperty]
     public Customer Customer { get; set; } = new Customer();
 
@@ -31,6 +35,8 @@ public class IndexModel : PageModel
     {
         for (int i = 0; i < Boxes.Count(); i++)
         {
+            _context.Boxes.Add(Boxes[i]);
+            await _context.SaveChangesAsync();
             System.Console.WriteLine("Hello World");
             System.Console.WriteLine(Customer.Name);
             System.Console.WriteLine(Customer.Department);
@@ -47,21 +53,10 @@ public class IndexModel : PageModel
         // if (Customer != null) _context.Customer.Add(Customer);
         // await _context.SaveChangesAsync();
 
-        return RedirectToPage("./Index");
+        return RedirectToPage("./Success");
     }
 
 }
-
-public class BoxItem
-{
-    public string InsideLength { get; set; } = "0001";
-    public string InsideWidth { get; set; } = "00";
-    public string InsideHeight { get; set; } = "00";
-    public string NumberOfBox { get; set; } = "00";
-    public Boolean isLid { get; set; } = false;
-    public Boolean isFoot { get; set; } = false;
-}
-
 
 public class Customer
 {
