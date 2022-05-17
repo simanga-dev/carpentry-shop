@@ -1,5 +1,5 @@
 ﻿using CarpentryShop.Models;
-using Microsoft.AspNetCore.Identity;
+// using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,16 +17,18 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<OrderItem> OrderItem { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<IdentityUser>().ToTable("Users");
-        modelBuilder.Entity<IdentityRole>().ToTable("Roles");
-        // modelBuilder.Entity<IdentityUserRole>().ToTable("Roles");
-
-    }
+    // protected override void OnModelCreating(ModelBuilder modelBuilder)
+    // {
+    //     base.OnModelCreating(modelBuilder);
+    //
+    //     modelBuilder.Entity<IdentityUser>().ToTable("Users");
+    //     modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+    //     // modelBuilder.Entity<IdentityUserRole>().ToTable("Roles");
+    //
+    // }
 
 
 }

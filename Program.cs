@@ -1,11 +1,16 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CarpentryShop.Data;
+using CarpentryShop.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+// public IConfiguration Configuration { get; }
+
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var emailSection = builder.Configuration.GetSection("EmailSettings");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -13,6 +18,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.Configure<EmailSettings>(emailSection);
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 builder.Services.AddRazorPages(options =>
         {

@@ -5,9 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CarpentryShop</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CarpentryShop.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/semantic-ui/semantic.min.css">
 </head>
 
@@ -16,14 +18,14 @@
         <nav class="navbar navbar-dark navbar-dark mb-3">
             <div class="container justify-content-between">
                 <!-- <div class="logo"> -->
-                    <!-- <img class="logo-img" src="~/logo.png"> -->
-                    <a class="navbar-brand" asp-area="" asp-page="/Index">Carpentry Shop</a>
+                <!-- <img class="logo-img" src="~/logo.png"> -->
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Carpentry Shop</a>
                 <!-- </div> -->
-                <partial name="_LoginPartial" />
+                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Admin</a>
             </div>
         </nav>
     </header>
-    <main style="height:100%;">
+    <main>
         @RenderBody()
     </main>
 

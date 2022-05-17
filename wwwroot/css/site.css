@@ -2,6 +2,39 @@
     width: 30rem;
     /* background-color: red; */
 }
+.mmm {
+    flex-direction: column !important;
+}
+
+.header {
+    margin-bottom: 0 !important;
+    /* padding-bottom: 0 !important; */
+}
+
+.customer-info {
+    padding-top: 1rem;
+
+}
+
+.box-boxe:not(:last-child) {
+
+    border-bottom: 1px solid rgba(34,36,38,.15);
+    /* background-color: red; */
+}
+
+.box-boxe:nth-child(2) {
+    border-top: 1px solid rgba(34,36,38,.15);
+}
+
+.img-figure {
+
+    padding-top: 3rem;
+}
+
+.box-boxe {
+    padding-top: 1rem;
+    /* background-color: red; */
+}
 
 label span {
     color: red;

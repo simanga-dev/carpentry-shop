@@ -5,14 +5,14 @@
 ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
+<div class="img-figure text-center">
     <h2 class="header">Welcome To Carpentry Shop </h2>
-    <img style="width: 100%; max-width: 23rem" src="~/fig-1.png" />
+    <img style="width: 100%; max-width: 25rem" src="~/fig-1.png" />
 </div>
 
 <div class="ui container why">
 
-    <form id="invoice-form" method="post" class="ui form segment error">
+    <form id="invoice-form" method="post" class="ui form error">
         <partial name="Partials/_items" />
 
         <div style="margin-top: 50px;">
@@ -22,10 +22,10 @@ ViewData["Title"] = "Home page";
                     Customer
                 </div>
             </h4>
-            <div class="four fields">
+            <div class="customer-info three fields">
                 <div class="field">
                     <label>Requested By <span class="required">*</span></label>
-                    <input id="name" type="text" asp-for="Customer.Name" maxlength="255" placeholder="Enter your name" >
+                    <input id="name" type="text" asp-for="Customer.Name" maxlength="255" placeholder="Enter your name">
                 </div>
                 <div class="field">
                     <label>Department Name <span class="required">*</span> </label>
@@ -35,10 +35,10 @@ ViewData["Title"] = "Home page";
                     <label>Email <span class="required">*</span></label>
                     <input type="email" asp-for="Customer.Email" maxlength="255" placeholder="Enter your email">
                 </div>
-                <div class="field">
-                    <label>Required Date <span class="required">*</span> </label>
-                    <input type="text" maxlength="255" placeholder="Select Date">
-                </div>
+                <!-- <div class="field"> -->
+                <!--     <label>Required Date <span class="required">*</span> </label> -->
+                <!--     <input type="text" asp-for="Order.ExpectedDate" class="datepicker" maxlength="255" placeholder="Select Date"> -->
+                <!-- </div> -->
 
             </div>
         </div>

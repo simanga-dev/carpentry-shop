@@ -47,6 +47,7 @@ function showOrHideRemoveButton(type, show) {
 
 $(function () {
     $('.datepicker').datepicker({ dateFormat: 'MM d, yy' });
+
     $('.ui.radio.checkboxe').checkbox();
     
     $('#generate').click(function () {

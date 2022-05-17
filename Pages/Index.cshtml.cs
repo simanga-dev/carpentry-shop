@@ -1,7 +1,10 @@
-﻿using CarpentryShop.Data;
+﻿using System.Diagnostics;
+using CarpentryShop.Data;
 using CarpentryShop.Models;
+using CarpentryShop.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MimeKit;
 
 namespace CarpentryShop.Pages;
 
@@ -9,15 +12,19 @@ public class IndexModel : PageModel
 {
     private readonly ApplicationDbContext _context;
     private readonly ILogger<IndexModel> _logger;
+    private readonly IEmailSender _emailSender;
 
     public string Message { get; private set; } = "PageModel in C#";
 
-    public IndexModel(ILogger<IndexModel> logger, 
-            ApplicationDbContext context)
+    public IndexModel(
+            ILogger<IndexModel> logger,
+            ApplicationDbContext context,
+            IEmailSender emailSender)
     {
 
         _context = context;
         _logger = logger;
+        _emailSender = emailSender;
     }
 
     public void OnGet()
@@ -29,39 +36,81 @@ public class IndexModel : PageModel
     [BindProperty]
     public List<Box> Boxes { get; set; }
     [BindProperty]
-    public Customer Customer { get; set; } = new Customer();
+    public Customer Customer { get; set; }
+    [BindProperty]
+    public Order Order { get; set; }
+    public OrderItem OrderItem { get; set; }
 
     public async Task<IActionResult> OnPostAsync()
     {
+
+        // check if customer alredad exist in database..
+        // Create one if doesn't
+        var customer = _context.Customers.FirstOrDefault(c => c.Email == Customer.Email);
+        if (customer == null)
+        {
+            _context.Customers.Add(Customer);
+            await _context.SaveChangesAsync();
+        }
+
+        // save order information
+        Order.Customer = customer;
+        _context.Orders.Add(Order);
+        await _context.SaveChangesAsync();
+
+        // save product
         for (int i = 0; i < Boxes.Count(); i++)
         {
+            var orderItem = new OrderItem();
+
+            Boxes[i].Description = $" A Box of { Boxes[i].InsideLength } x { Boxes[i].InsideWidth } x { Boxes[i].InsideHeight } dimesion";
             _context.Boxes.Add(Boxes[i]);
             await _context.SaveChangesAsync();
-            System.Console.WriteLine("Hello World");
-            System.Console.WriteLine(Customer.Name);
-            System.Console.WriteLine(Customer.Department);
-            System.Console.WriteLine(Customer.Email);
-            // System.Console.WriteLine(Customer.);
+
+            orderItem.Box = Boxes[i];
+            orderItem.Order = Order;
+            _context.OrderItem.Add(orderItem);
+            await _context.SaveChangesAsync();
 
         }
 
-        // if (!ModelState.IsValid)
+        Process process = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = "bash",
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false
+            }
+        };
+
+        process.Start();
+        await process.StandardInput.WriteLineAsync("pwd");
+        var output = await process.StandardOutput.ReadLineAsync();
+        Console.WriteLine(output);
+
+        // try
         // {
-        //     return Page();
+        //     InternetAddressList list = new InternetAddressList();
+        //     list.Add(MailboxAddress.Parse("hendry@copalcor.co.za"));
+        //     // list.Add(MailboxAddress.Parse("benson@copalcor.co.za"));
+        //     // list.Add(MailboxAddress.Parse("Thembisile@copalcor.co.za "));
+        //
+        //     // Send Email to supervisor and requesting user
+        //     await _emailSender.SendEmailAsync(list, $" { customer.Name } Placed an Order for Carpentry Shop",
+        //             $@" Order information blah blah blah");
+        // }
+        // catch (System.Exception)
+        // {
+        //
+        //     throw;
         // }
         //
-        // if (Customer != null) _context.Customer.Add(Customer);
-        // await _context.SaveChangesAsync();
 
         return RedirectToPage("./Success");
     }
 
 }
 
-public class Customer
-{
-    public string Email { get; set; } = "";
-    public string Name { get; set; } = "";
-    public string Department { get; set; } = "";
-
-}
