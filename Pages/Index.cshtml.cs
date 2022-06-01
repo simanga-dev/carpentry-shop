@@ -39,57 +39,55 @@ public class IndexModel : PageModel
     public Customer Customer { get; set; }
     [BindProperty]
     public Order Order { get; set; }
-    public OrderItem OrderItem { get; set; }
+    public OrderBox OrderBox { get; set; }
 
     public async Task<IActionResult> OnPostAsync()
     {
-
         // check if customer alredad exist in database..
         // Create one if doesn't
         var customer = _context.Customers.FirstOrDefault(c => c.Email == Customer.Email);
         if (customer == null)
         {
-            _context.Customers.Add(Customer);
+            customer = _context.Customers.Add(Customer).Entity;
             await _context.SaveChangesAsync();
         }
 
-        // save order information
         Order.Customer = customer;
         _context.Orders.Add(Order);
         await _context.SaveChangesAsync();
 
+
         // save product
         for (int i = 0; i < Boxes.Count(); i++)
         {
-            var orderItem = new OrderItem();
+            var orderBox = new OrderBox();
 
-            Boxes[i].Description = $" A Box of { Boxes[i].InsideLength } x { Boxes[i].InsideWidth } x { Boxes[i].InsideHeight } dimesion";
+            Boxes[i].Description = $"A Box of { Boxes[i].InsideLength } x { Boxes[i].InsideWidth } x { Boxes[i].InsideHeight } dimesion";
             _context.Boxes.Add(Boxes[i]);
             await _context.SaveChangesAsync();
 
-            orderItem.Box = Boxes[i];
-            orderItem.Order = Order;
-            _context.OrderItem.Add(orderItem);
+            orderBox.Box = Boxes[i];
+            orderBox.Order = Order;
+            _context.OrderBoxes.Add(orderBox);
             await _context.SaveChangesAsync();
-
         }
 
-        Process process = new Process
-        {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = "bash",
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false
-            }
-        };
+        // Process process = new Process
+        // {
+        //     StartInfo = new ProcessStartInfo
+        //     {
+        //         FileName = "bash",
+        //         RedirectStandardInput = true,
+        //         RedirectStandardOutput = true,
+        //         RedirectStandardError = true,
+        //         UseShellExecute = false
+        //     }
+        // };
 
-        process.Start();
-        await process.StandardInput.WriteLineAsync("pwd");
-        var output = await process.StandardOutput.ReadLineAsync();
-        Console.WriteLine(output);
+        // process.Start();
+        // await process.StandardInput.WriteLineAsync("pwd");
+        // var output = await process.StandardOutput.ReadLineAsync();
+        // Console.WriteLine(output);
 
         // try
         // {

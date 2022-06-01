@@ -18,7 +18,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Product> Products { get; set; }
-    public DbSet<OrderItem> OrderItem { get; set; }
+    public DbSet<OrderBox> OrderBoxes { get; set; }
 
     // protected override void OnModelCreating(ModelBuilder modelBuilder)
     // {

@@ -1,9 +1,37 @@
 @page
 @model AdminModel
 @{
-    Layout = "Shared/_AdminLayout";
-    ViewData["Title"] = "Admin Panel";
+Layout = "Shared/_AdminLayout";
+ViewData["Title"] = "Admin Panel";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p> This is where I will display the table for all orders</p>
+<div class="order-table ui container">
+    <h3>@ViewData["Title"]</h3>
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>Order Ref</th>
+                <th>Name</th>
+                <th>Department Name</th>
+                <th>Emails</th>
+                <th>Num of Box</th>
+                <th>Completed Boxs</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Orders) {
+            <tr>
+                <td data-label="Name">@item.Id</td>
+                <td data-label="Age">@item.Customer.Name</td>
+                <td data-label="Age">@item.Customer.Department</td>
+                <td data-label="Age">@item.Customer.Email</td>
+                <td data-label="Name"><a href="/">View</a></td>
+                <td data-label="Name"><a href="/">View</a></td>
+                <td data-label="Name"><a href="/">View</a></td>
+            </tr>
+
+            }
+        </tbody>
+    </table>
+</div>

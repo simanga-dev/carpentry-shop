@@ -3,6 +3,7 @@ using System;
 using CarpentryShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarpentryShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220530114852_033ww")]
+    partial class _033ww
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
@@ -109,7 +111,7 @@ namespace CarpentryShop.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderBoxes");
+                    b.ToTable("OrderBoxs");
                 });
 
             modelBuilder.Entity("CarpentryShop.Models.Product", b =>

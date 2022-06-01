@@ -5,6 +5,8 @@
 
 // Handle new item add
 function addRow(type) {
+
+    $(".datepicker").datepicker("destroy");
     
     // Copyable rows
     let starterTemplate = $('#starter-' + type).html();
@@ -17,22 +19,27 @@ function addRow(type) {
     RegExp.quote = function(str) {
         return str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
     };
-    
-    let regexOne = new RegExp(RegExp.quote(upperCaseType + "_0"),"g");
-    let regexTwo = new RegExp(RegExp.quote(upperCaseType + "[0]"),"g");
+
+    let regexOne = new RegExp(RegExp.quote(upperCaseType + "_0"), "g");
+    let regexTwo = new RegExp(RegExp.quote(upperCaseType + "[0]"), "g");
     let newRow = starterTemplate.replace(regexOne, upperCaseType + "_" + count)
         .replace(regexTwo, upperCaseType + "[" + count + "]");
 
     $('#box-' + type).append(newRow);
+    // newRow.datepicker({ dateFormat: 'MM d, yy' });
+
 
     // Needed to activate radio buttons, if required
     $('.ui.radio.checkbox').checkbox();
 
+
     showOrHideRemoveButton(type, true);
+    $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+
 }
 
 
-    $('.ui.radio.checkbox').checkbox();
+$('.ui.radio.checkbox').checkbox();
 
 function removeRow(type) {
     let count = $('.box-' + type).length;
@@ -45,17 +52,18 @@ function showOrHideRemoveButton(type, show) {
     show ? $('#remove-' + type).show() : $('#remove-' + type).hide();
 }
 
-$(function () {
-    $('.datepicker').datepicker({ dateFormat: 'MM d, yy' });
+$(function() {
+
+    $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
 
     $('.ui.radio.checkboxe').checkbox();
-    
-    $('#generate').click(function () {
+
+    $('#generate').click(function() {
         let valid = $('#boxe-form')[0].checkValidity();
         if (valid) {
             let element = $(this);
             element.addClass('loading');
-            setTimeout(function(){
+            setTimeout(function() {
                 element.removeClass('loading');
             }, 2000);
         }

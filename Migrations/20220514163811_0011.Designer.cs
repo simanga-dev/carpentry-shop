@@ -3,6 +3,7 @@ using System;
 using CarpentryShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarpentryShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220514163811_0011")]
+    partial class _0011
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.5");
@@ -23,12 +25,6 @@ namespace CarpentryShop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("ExpectedDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("InsideHeight")
                         .HasColumnType("TEXT");
 
@@ -37,9 +33,6 @@ namespace CarpentryShop.Migrations
 
                     b.Property<string>("InsideWidth")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("isFoot")
                         .HasColumnType("INTEGER");
@@ -84,32 +77,14 @@ namespace CarpentryShop.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("ExpectedDate")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("CarpentryShop.Models.OrderBox", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("BoxId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BoxId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("OrderBoxes");
                 });
 
             modelBuilder.Entity("CarpentryShop.Models.Product", b =>
@@ -118,13 +93,21 @@ namespace CarpentryShop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("BoxId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("OrderId")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("BoxId");
 
                     b.HasIndex("OrderId");
 
@@ -355,7 +338,7 @@ namespace CarpentryShop.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("CarpentryShop.Models.OrderBox", b =>
+            modelBuilder.Entity("CarpentryShop.Models.Product", b =>
                 {
                     b.HasOne("CarpentryShop.Models.Box", "Box")
                         .WithMany()
@@ -366,15 +349,6 @@ namespace CarpentryShop.Migrations
                         .HasForeignKey("OrderId");
 
                     b.Navigation("Box");
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("CarpentryShop.Models.Product", b =>
-                {
-                    b.HasOne("CarpentryShop.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
 
                     b.Navigation("Order");
                 });

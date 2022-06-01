@@ -62,3 +62,13 @@ body {
 .logo .logo-img {
     height: 3.8rem !important;
 }
+.check.icon {
+    padding-top: 1rem;
+    font-size: 4rem;
+}
+.order-table {
+    margin: 4rem 0;
+    padding-top: 2rem;
+    padding-right: 4rem;
+    padding-bottom: 4rem;
+}

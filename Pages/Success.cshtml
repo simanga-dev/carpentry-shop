@@ -1,8 +1,15 @@
 @page
 @model SuccessModel
 @{
-    ViewData["Title"] = "Success";
+ViewData["Title"] = "Success";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Your order has been created. you will be notfied by email when created</p>
+<div style="height:100%; margin: 0; hidden;" class="ui middle aligned center aligned grid">
+    <div style="max-width:450px;padding-top: 10rem " class="column">
+        <h1>@ViewData["Title"]</h1>
+        <i class=" green check icon"></i>
+        <p class="">Your order has been created. you will be notfied by email when created</p>
+
+        <a href="/">Go home</a>
+    </div>
+</div>

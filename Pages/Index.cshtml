@@ -55,8 +55,11 @@ ViewData["Title"] = "Home page";
 </div>
 
 
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
 
 <script>
+
     $('.ui.form')
         .form({
             fields: {
@@ -73,3 +76,5 @@ ViewData["Title"] = "Home page";
         });
 
 </script>
+
+}

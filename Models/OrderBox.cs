@@ -3,9 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarpentryShop.Models;
 
-public class OrderItem
+public class OrderBox
 {
-
     [Key]
     public Guid Id { get; set; }
     [ForeignKey("OrderId")]
