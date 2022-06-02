@@ -1,12 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace CarpentryShop.Models;
 
-public class Customer
+public class Customer : IdentityUser
 {
     [Key]
-    public Guid Id { get; set; }
+    
     public string Name { get; set; }
-    public string Email { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
     public string Department { get; set; }
 }

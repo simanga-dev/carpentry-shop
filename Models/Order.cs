@@ -11,6 +11,7 @@ public class Order
     public DateTime Date { get; set; }
     [ForeignKey("CustomerId")]
     public Customer Customer { get; set; }
+    // public User User { get; set; }
     public Boolean isComplete { get; set; }
 
     public Order()

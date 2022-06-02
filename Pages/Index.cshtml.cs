@@ -2,6 +2,7 @@
 using CarpentryShop.Data;
 using CarpentryShop.Models;
 using CarpentryShop.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MimeKit;
@@ -13,18 +14,20 @@ public class IndexModel : PageModel
     private readonly ApplicationDbContext _context;
     private readonly ILogger<IndexModel> _logger;
     private readonly IEmailSender _emailSender;
+    private readonly UserManager<User> _userManager;
 
     public string Message { get; private set; } = "PageModel in C#";
 
     public IndexModel(
             ILogger<IndexModel> logger,
             ApplicationDbContext context,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            UserManager<User> userManager)
     {
-
         _context = context;
         _logger = logger;
         _emailSender = emailSender;
+        _userManager = userManager;
     }
 
     public void OnGet()
@@ -36,23 +39,27 @@ public class IndexModel : PageModel
     [BindProperty]
     public List<Box> Boxes { get; set; }
     [BindProperty]
-    public Customer Customer { get; set; }
+    public Customer Customer { get; set; } = new User();
     [BindProperty]
     public Order Order { get; set; }
     public OrderBox OrderBox { get; set; }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        // check if customer alredad exist in database..
-        // Create one if doesn't
-        var customer = _context.Customers.FirstOrDefault(c => c.Email == Customer.Email);
-        if (customer == null)
+
+        var user = _context.Users.FirstOrDefault(u => u.Email == User.Email);
+
+        if (user == null)
         {
-            customer = _context.Customers.Add(Customer).Entity;
-            await _context.SaveChangesAsync();
+            System.Console.WriteLine("Hey do I run");
+            User.UserName = User.Email;
+            var result = await _userManager.CreateAsync(User, "P@$$word1");
+
+            user = _context.Users.FirstOrDefault(u => u.Email == User.Email);
+            // UserManager<User> _userManager = serviceProvider.GetService<UserManager<User>>();
         }
 
-        Order.Customer = customer;
+        System.Console.WriteLine(user.Id);
         _context.Orders.Add(Order);
         await _context.SaveChangesAsync();
 

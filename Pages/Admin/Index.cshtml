@@ -20,6 +20,7 @@ ViewData["Title"] = "Admin Panel";
             </tr>
         </thead>
         <tbody>
+            @*
             @for (int i = 0; i < Model.Orders.Count; i++) { <tr>
                 <td data-label="Id">@Model.Orders[i].Id</td>
                 <td data-label="Name">@Model.Orders[i].Customer.Name</td>
@@ -29,8 +30,8 @@ ViewData["Title"] = "Admin Panel";
                 <td data-label="Name"><a href="/">View</a></td>
                 <td data-label="Details"><a asp-page="./Details" asp-route-id="@Model.Orders[i].Id">Details</a></td>
                 </tr>
-
                 }
+                *@
         </tbody>
     </table>
 </div>

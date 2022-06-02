@@ -30,10 +30,10 @@ public class AdminModel : PageModel
             OrderBoxes = await _context.OrderBoxes
                 .Include(q => q.Box)
                 .Include(q => q.Order)
-                .ThenInclude(Order => Order.Customer)
+                // .ThenInclude(Order => Order.Customer)
                 .ToListAsync();
 
-            Orders = await _context.Orders.Include(q => q.Customer).ToListAsync();
+            // Orders = await _context.Orders.Include(q => q.Customer).ToListAsync();
 
             for (int i = 0; i < Orders.Count; i++)
             {

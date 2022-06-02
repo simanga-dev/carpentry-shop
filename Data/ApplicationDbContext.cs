@@ -16,7 +16,6 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Box> Boxes { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Order> Orders { get; set; }
-    public DbSet<User> Users { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<OrderBox> OrderBoxes { get; set; }
 
