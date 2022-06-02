@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using CarpentryShop.Data;
+using CarpentryShop.Areas.Identity.Data;
 using CarpentryShop.Models;
 using CarpentryShop.Services;
 using Microsoft.AspNetCore.Identity;
@@ -11,18 +11,16 @@ namespace CarpentryShop.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ApplicationDbContext _context;
+    private readonly CarpentryShopIdentityDbContext _context;
     private readonly ILogger<IndexModel> _logger;
     private readonly IEmailSender _emailSender;
-    // private readonly UserManager<User> _userManager;
 
     public string Message { get; private set; } = "PageModel in C#";
 
     public IndexModel(
             ILogger<IndexModel> logger,
-            ApplicationDbContext context,
+            CarpentryShopIdentityDbContext context,
             IEmailSender emailSender)
-            // UserManager<User> userManager)
     {
         _context = context;
         _logger = logger;
@@ -47,19 +45,21 @@ public class IndexModel : PageModel
     public async Task<IActionResult> OnPostAsync()
     {
 
-        var user = _context.Users.FirstOrDefault(u => u.Email == Customer.Email);
+        var customer = _context.Customers.FirstOrDefault(u => u.Email == Customer.Email);
 
-        if (user == null)
+        if (customer == null)
         {
             System.Console.WriteLine("Hey do I run");
-            // User.UserName = User.Email;
-            // var result = await _userManager.CreateAsync(User, "P@$$word1");
+            Customer.UserName = Customer.Email;
+            customer = _context.Customers.Add(Customer).Entity;
+
+            // var result = await _userManager.CreateAsync(Customer, "P@$$word1");
 
             // user = _context.Users.FirstOrDefault(u => u.Email == User.Email);
             // UserManager<User> _userManager = serviceProvider.GetService<UserManager<User>>();
         }
 
-        System.Console.WriteLine(user.Id);
+        System.Console.WriteLine(customer.Id);
         _context.Orders.Add(Order);
         await _context.SaveChangesAsync();
 

@@ -1,4 +1,4 @@
-using CarpentryShop.Data;
+using CarpentryShop.Areas.Identity.Data;
 using CarpentryShop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,9 +10,9 @@ public class DetailsModel : PageModel
 {
 
     private readonly ILogger<DetailsModel> _logger;
-    private readonly ApplicationDbContext _context;
+    private readonly CarpentryShopIdentityDbContext _context;
 
-    public DetailsModel(ApplicationDbContext context)
+    public DetailsModel(CarpentryShopIdentityDbContext context)
     {
         _context = context;
     }

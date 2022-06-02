@@ -5,9 +5,6 @@ namespace CarpentryShop.Models;
 
 public class Customer : IdentityUser
 {
-    [Key]
-    
-    public string Name { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Department { get; set; }

@@ -1,4 +1,4 @@
-using CarpentryShop.Data;
+using CarpentryShop.Areas.Identity.Data;
 using CarpentryShop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,9 +9,9 @@ namespace CarpentryShop.Pages;
 public class AdminModel : PageModel
 {
     private readonly ILogger<AdminModel> _logger;
-    private readonly ApplicationDbContext _context;
+    private readonly CarpentryShopIdentityDbContext _context;
 
-    public AdminModel(ILogger<AdminModel> logger, ApplicationDbContext context)
+    public AdminModel(ILogger<AdminModel> logger, CarpentryShopIdentityDbContext context)
     {
         _logger = logger;
         _context = context;
@@ -30,10 +30,10 @@ public class AdminModel : PageModel
             OrderBoxes = await _context.OrderBoxes
                 .Include(q => q.Box)
                 .Include(q => q.Order)
-                // .ThenInclude(Order => Order.Customer)
+                .ThenInclude(Order => Order.Customer)
                 .ToListAsync();
 
-            // Orders = await _context.Orders.Include(q => q.Customer).ToListAsync();
+            Orders = await _context.Orders.Include(q => q.Customer).ToListAsync();
 
             for (int i = 0; i < Orders.Count; i++)
             {

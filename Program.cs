@@ -1,24 +1,20 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using CarpentryShop.Data;
 using CarpentryShop.Services;
+using CarpentryShop.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-// public IConfiguration Configuration { get; }
-
-
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var emailSection = builder.Configuration.GetSection("EmailSettings");
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+var connectionString = builder.Configuration.GetConnectionString("CarpentryShopIdentityDbContextConnection");
+builder.Services.AddDbContext<CarpentryShopIdentityDbContext>(options =>
     options.UseSqlite(connectionString));
+
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<CarpentryShopIdentityDbContext>();
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-//                 .AddRoles<IdentityRole>()
-//                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+var emailSection = builder.Configuration.GetSection("EmailSettings");
 builder.Services.Configure<EmailSettings>(emailSection);
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
@@ -45,7 +41,7 @@ else
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<ApplicationDbContext>();
+    var context = services.GetRequiredService<CarpentryShopIdentityDbContext>();
     context.Database.EnsureCreated();
     // DbInitializer.Initialize(context);
 }
@@ -58,11 +54,11 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var services = scope.ServiceProvider;
-//     await SampleData.InitializeAsync(services);
-// }
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await SampleData.InitializeAsync(services);
+}
 
 app.MapRazorPages();
 

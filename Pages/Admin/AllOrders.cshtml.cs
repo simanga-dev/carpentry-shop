@@ -1,4 +1,4 @@
-using CarpentryShop.Data;
+using CarpentryShop.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CarpentryShop.Pages;
@@ -6,9 +6,9 @@ namespace CarpentryShop.Pages;
 public class AllOrders : PageModel
 {
     private readonly ILogger<AdminModel> _logger;
-    private readonly ApplicationDbContext _context;
+    private readonly CarpentryShopIdentityDbContext _context;
 
-    public AllOrders(ILogger<AdminModel> logger, ApplicationDbContext context)
+    public AllOrders(ILogger<AdminModel> logger, CarpentryShopIdentityDbContext context)
     {
         _logger = logger;
         _context = context;
