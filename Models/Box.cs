@@ -1,4 +1,3 @@
-
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,6 +13,7 @@ public class Box
     public string InsideHeight { get; set; }
     public Boolean isLid { get; set; }
     public Boolean isFoot { get; set; }
+    public Boolean isComplete { get; set; }
     // this does not belong here.. but hey 
     public int Quantity { get; set; }
     public DateTime ExpectedDate { get; set; }

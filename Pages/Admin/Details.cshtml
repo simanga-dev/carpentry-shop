@@ -1,0 +1,44 @@
+@page
+@model DetailsModel
+
+@{
+Layout = "Shared/_AdminLayout";
+ViewData["Title"] = "Details";
+}
+
+<div class="order-table ui container">
+    <h3> Details of Order {blah blah}</h3>
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>Box Ref</th>
+                <th>Description</th>
+                <th>Length</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th>Lid</th>
+                <th>Foot</th>
+                <th>Quantity</th>
+                <th>Expected Date</th>
+                <th>Complete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.OrderBoxes.Count; i++) { <tr>
+                <td data-label="Id">@Model.OrderBoxes[i].Box.Id</td>
+                <td data-label="Id">@Model.OrderBoxes[i].Box.Description</td>
+                <td data-label="Id">@Model.OrderBoxes[i].Box.InsideLength</td>
+                <td data-label="Id">@Model.OrderBoxes[i].Box.InsideWidth</td>
+                <td data-label="Id">@Model.OrderBoxes[i].Box.InsideHeight</td>
+                <td data-label="Id">@Model.OrderBoxes[i].Box.isLid</td>
+                <td data-label="Id">@Model.OrderBoxes[i].Box.isFoot</td>
+                <td data-label="Id">@Model.OrderBoxes[i].Box.Quantity</td>
+                <td data-label="Id">@Model.OrderBoxes[i].Box.ExpectedDate.ToString("dd/MM/yyyy")</td>
+                <td data-label="Details"> <input type="checkbox" name="Boxes[0].isLid" tabindex="0"
+                        class="hidden" /> </td>
+                </tr>
+                }
+        </tbody>
+    </table>
+    <button id="login-submit" type="submit" class="ui fluid large black submit button">Save</button>
+</div>

@@ -24,7 +24,7 @@ builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 builder.Services.AddRazorPages(options =>
         {
-            options.Conventions.AuthorizePage("/Admin");
+            options.Conventions.AuthorizePage("/Admin/Index");
         });
 
 var app = builder.Build();
