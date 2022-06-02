@@ -15,9 +15,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+// builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+//                 .AddRoles<IdentityRole>()
+//                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.Configure<EmailSettings>(emailSection);
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
@@ -58,11 +58,11 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    await SampleData.InitializeAsync(services);
-}
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+//     await SampleData.InitializeAsync(services);
+// }
 
 app.MapRazorPages();
 

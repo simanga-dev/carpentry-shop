@@ -14,20 +14,20 @@ public class IndexModel : PageModel
     private readonly ApplicationDbContext _context;
     private readonly ILogger<IndexModel> _logger;
     private readonly IEmailSender _emailSender;
-    private readonly UserManager<User> _userManager;
+    // private readonly UserManager<User> _userManager;
 
     public string Message { get; private set; } = "PageModel in C#";
 
     public IndexModel(
             ILogger<IndexModel> logger,
             ApplicationDbContext context,
-            IEmailSender emailSender,
-            UserManager<User> userManager)
+            IEmailSender emailSender)
+            // UserManager<User> userManager)
     {
         _context = context;
         _logger = logger;
         _emailSender = emailSender;
-        _userManager = userManager;
+        // _userManager = userManager;
     }
 
     public void OnGet()
@@ -39,7 +39,7 @@ public class IndexModel : PageModel
     [BindProperty]
     public List<Box> Boxes { get; set; }
     [BindProperty]
-    public Customer Customer { get; set; } = new User();
+    public Customer Customer { get; set; }
     [BindProperty]
     public Order Order { get; set; }
     public OrderBox OrderBox { get; set; }
@@ -47,15 +47,15 @@ public class IndexModel : PageModel
     public async Task<IActionResult> OnPostAsync()
     {
 
-        var user = _context.Users.FirstOrDefault(u => u.Email == User.Email);
+        var user = _context.Users.FirstOrDefault(u => u.Email == Customer.Email);
 
         if (user == null)
         {
             System.Console.WriteLine("Hey do I run");
-            User.UserName = User.Email;
-            var result = await _userManager.CreateAsync(User, "P@$$word1");
+            // User.UserName = User.Email;
+            // var result = await _userManager.CreateAsync(User, "P@$$word1");
 
-            user = _context.Users.FirstOrDefault(u => u.Email == User.Email);
+            // user = _context.Users.FirstOrDefault(u => u.Email == User.Email);
             // UserManager<User> _userManager = serviceProvider.GetService<UserManager<User>>();
         }
 
