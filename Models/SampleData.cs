@@ -31,8 +31,8 @@ public class SampleData
         {
             // FirstName = "Admin",
             // LastName = "User",
-            Email = "admin@copalcor.co.za",
-            UserName = "admin@copalcor.co.za",
+            Email = "admin@localhost.com",
+            UserName = "admin@localhost.com",
             // NormalizedEmail = "ADMIN@COPALCOR.CO.ZA",
             // NormalizedUserName = "ADMIN@COPALCOR.CO.ZA",
             // PhoneNumber = "+111111111111",
@@ -47,7 +47,7 @@ public class SampleData
         if (!context.Users.Any(u => u.UserName == user.UserName))
         {
             UserManager<IdentityUser> _userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
-            var results = await _userManager.CreateAsync(user, "P@ssword1");
+            var results = await _userManager.CreateAsync(user, "P@$$w0r1d");
         }
 
         await AssignRoles(serviceProvider, user.Email, roles);
