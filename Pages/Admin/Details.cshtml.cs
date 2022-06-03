@@ -18,6 +18,7 @@ public class DetailsModel : PageModel
     }
 
     public List<OrderBox> OrderBoxes { get; set; } = new List<OrderBox>();
+    [BindProperty]
     public Order Order { get; set; } = new Order();
 
     public async Task<IActionResult> OnGetAsync(Guid? id)
@@ -30,12 +31,10 @@ public class DetailsModel : PageModel
         Order = await _context.Orders.FirstOrDefaultAsync(m => m.Id == id);
         OrderBoxes = await _context.OrderBoxes.Include(q => q.Box).Where(q => q.Order.Id == Order.Id).ToListAsync();
 
-        for (int i = 0; i < OrderBoxes.Count; i++)
-        {
-           System.Console.WriteLine(OrderBoxes[i].Id); 
-        }
-
-
+        // for (int i = 0; i < OrderBoxes.Count; i++)
+        // {
+        //     System.Console.WriteLine(OrderBoxes[i].Id);
+        // }
 
         if (Order == null)
         {
@@ -43,6 +42,32 @@ public class DetailsModel : PageModel
         }
 
         return Page();
+    }
+
+    [BindProperty]
+    public List<item> Items { get; set; } = new List<item>();
+    public async Task<IActionResult> OnPostAsync(Guid? id)
+    {
+        for (int i = 0; i < Items.Count; i++)
+        {
+            if (Items[i].Value == "on")
+            {
+                var box = await _context.Boxes.FirstOrDefaultAsync(b => b.Id == Items[i].Id);
+                box.isComplete = true;
+                _context.Boxes.Update(box);
+                await _context.SaveChangesAsync();
+
+            }
+        }
+        Order = await _context.Orders.FirstOrDefaultAsync(m => m.Id == id);
+        OrderBoxes = await _context.OrderBoxes.Include(q => q.Box).Where(q => q.Order.Id == Order.Id).ToListAsync();
+        return Page();
+    }
+
+    public class item
+    {
+        public Guid Id { get; set; }
+        public string Value { get; set; }
     }
 }
 

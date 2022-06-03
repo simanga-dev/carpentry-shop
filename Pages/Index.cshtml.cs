@@ -33,7 +33,6 @@ public class IndexModel : PageModel
 
     }
 
-
     [BindProperty]
     public List<Box> Boxes { get; set; }
     [BindProperty]
@@ -44,22 +43,14 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-
         var customer = _context.Customers.FirstOrDefault(u => u.Email == Customer.Email);
-
         if (customer == null)
         {
-            System.Console.WriteLine("Hey do I run");
             Customer.UserName = Customer.Email;
             customer = _context.Customers.Add(Customer).Entity;
-
-            // var result = await _userManager.CreateAsync(Customer, "P@$$word1");
-
-            // user = _context.Users.FirstOrDefault(u => u.Email == User.Email);
-            // UserManager<User> _userManager = serviceProvider.GetService<UserManager<User>>();
         }
 
-        System.Console.WriteLine(customer.Id);
+        Order.Customer = customer;
         _context.Orders.Add(Order);
         await _context.SaveChangesAsync();
 

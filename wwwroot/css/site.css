@@ -72,3 +72,6 @@ body {
     padding-right: 4rem;
     padding-bottom: 4rem;
 }
+.none {
+    display: none;
+}

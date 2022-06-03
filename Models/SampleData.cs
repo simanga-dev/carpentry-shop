@@ -1,6 +1,4 @@
-
 using CarpentryShop.Areas.Identity.Data;
-using CarpentryShop.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
@@ -60,7 +58,7 @@ public class SampleData
 
         IdentityUser user = await _userManager.FindByEmailAsync(email);
         // var result = await _userManager.AddToRoleAsync(user, roles[0]);
-        // var result = await _userManager.AddToRoleAsync(user, roles[0]);
+        // var result = await _userManager.AddToRolesAsync(user, roles);
 
         return user;
     }
