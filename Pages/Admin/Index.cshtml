@@ -15,23 +15,21 @@ ViewData["Title"] = "Admin Panel";
                 <th>Department Name</th>
                 <th>Emails</th>
                 <th>Num of Box</th>
-                <th>Completed Boxs</th>
+                <th>Completed Boxes</th>
                 <th>Details</th>
             </tr>
         </thead>
         <tbody>
-            @*
             @for (int i = 0; i < Model.Orders.Count; i++) { <tr>
-                <td data-label="Id">@Model.Orders[i].Id</td>
-                <td data-label="Name">@Model.Orders[i].Customer.Name</td>
+                <td data-label="Id">@Model.Orders[i].Id.ToString().Split("-")[0]</td>
+                <td data-label="Name">@Model.Orders[i].Customer.FirstName</td>
                 <td data-label="Department">@Model.Orders[i].Customer.Department</td>
                 <td data-label="Email">@Model.Orders[i].Customer.Email</td>
                 <td data-label="NumOfBoxes">@Model.NumOfBoxes[i]</td>
-                <td data-label="Name"><a href="/">View</a></td>
+                <td data-label="NumOfBoxes">@Model.CompBoxes[i]</td>
                 <td data-label="Details"><a asp-page="./Details" asp-route-id="@Model.Orders[i].Id">Details</a></td>
                 </tr>
                 }
-                *@
         </tbody>
     </table>
 </div>

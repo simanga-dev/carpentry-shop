@@ -37,18 +37,25 @@ public class AdminModel : PageModel
 
             for (int i = 0; i < Orders.Count; i++)
             {
-                int boxes = await _context.OrderBoxes.Where(q => q.Order.Id == Orders[i].Id).CountAsync();
-                NumOfBoxes.Add(boxes);
-
+                // int numOf = await _context.OrderBoxes.Where(q => q.Order.Id == Orders[i].Id).CountAsync();
+                // NumOfBoxes.Add(boxes);
+                var count_complete = 0;
+                var count = 0;
+                var boxes = await _context.OrderBoxes.Include(q => q.Box).Where(q => q.Order.Id == Orders[i].Id).ToListAsync();
+                for (int j = 0; j < boxes.Count; j++)
+                {
+                    if (boxes[i].Box.isComplete)
+                        count_complete += 1;
+                    count += 1;
+                }
+                NumOfBoxes.Add(count);
+                CompBoxes.Add(count_complete);
             }
-
         }
         catch (System.Exception)
         {
-
             throw;
         }
-
     }
 }
 
