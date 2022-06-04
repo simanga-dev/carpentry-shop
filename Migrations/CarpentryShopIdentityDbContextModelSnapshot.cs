@@ -89,6 +89,9 @@ namespace CarpentryShop.Migrations
                     b.Property<Guid?>("OrderId")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("isComplete")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BoxId");
@@ -330,9 +333,6 @@ namespace CarpentryShop.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue("Customer");

@@ -33,7 +33,7 @@ public class AdminModel : PageModel
                 .ThenInclude(Order => Order.Customer)
                 .ToListAsync();
 
-            Orders = await _context.Orders.Include(q => q.Customer).ToListAsync();
+            Orders = await _context.Orders.Include(q => q.Customer).Where(q => q.isComplete == false).ToListAsync();
 
             for (int i = 0; i < Orders.Count; i++)
             {
@@ -44,7 +44,7 @@ public class AdminModel : PageModel
                 var boxes = await _context.OrderBoxes.Include(q => q.Box).Where(q => q.Order.Id == Orders[i].Id).ToListAsync();
                 for (int j = 0; j < boxes.Count; j++)
                 {
-                    if (boxes[i].Box.isComplete)
+                    if (boxes[j].Box.isComplete)
                         count_complete += 1;
                     count += 1;
                 }
@@ -55,6 +55,7 @@ public class AdminModel : PageModel
         catch (System.Exception)
         {
             throw;
+
         }
     }
 }

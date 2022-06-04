@@ -17,5 +17,6 @@ public class Order
     public Order()
     {
         this.Date = DateTime.UtcNow;
+        isComplete = false;
     }
 }

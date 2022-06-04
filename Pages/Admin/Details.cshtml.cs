@@ -61,6 +61,17 @@ public class DetailsModel : PageModel
         }
         Order = await _context.Orders.FirstOrDefaultAsync(m => m.Id == id);
         OrderBoxes = await _context.OrderBoxes.Include(q => q.Box).Where(q => q.Order.Id == Order.Id).ToListAsync();
+
+        for (int i = 0; i < OrderBoxes.Count; i++)
+        {
+            if (!OrderBoxes[i].Box.isComplete)
+                return Page();
+
+            Order.isComplete = true;
+            _context.Orders.Update(Order);
+            await _context.SaveChangesAsync();
+        }
+
         return Page();
     }
 

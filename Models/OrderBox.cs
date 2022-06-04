@@ -11,5 +11,6 @@ public class OrderBox
     public Order Order { get; set; }
     [ForeignKey("BoxId")]
     public Box Box { get; set; }
+    public Boolean isComplete { get; set; }
 
 }
