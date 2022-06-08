@@ -70,40 +70,31 @@ public class IndexModel : PageModel
             await _context.SaveChangesAsync();
         }
 
-        // Process process = new Process
-        // {
-        //     StartInfo = new ProcessStartInfo
-        //     {
-        //         FileName = "bash",
-        //         RedirectStandardInput = true,
-        //         RedirectStandardOutput = true,
-        //         RedirectStandardError = true,
-        //         UseShellExecute = false
-        //     }
-        // };
-
-        // process.Start();
-        // await process.StandardInput.WriteLineAsync("pwd");
-        // var output = await process.StandardOutput.ReadLineAsync();
-        // Console.WriteLine(output);
-
         // try
         // {
         //     InternetAddressList list = new InternetAddressList();
-        //     list.Add(MailboxAddress.Parse("hendry@copalcor.co.za"));
-        //     // list.Add(MailboxAddress.Parse("benson@copalcor.co.za"));
-        //     // list.Add(MailboxAddress.Parse("Thembisile@copalcor.co.za "));
+        //     list.Add(MailboxAddress.Parse("h3khoza@gmail.com"));
         //
         //     // Send Email to supervisor and requesting user
-        //     await _emailSender.SendEmailAsync(list, $" { customer.Name } Placed an Order for Carpentry Shop",
-        //             $@" Order information blah blah blah");
+        //     await _emailSender.SendEmailAsync(list, $" Order Placement Notification",
+        //             $@" 
+        //             Good day 
+        //
+        //             This email is to confirem that { customer.FirstName } Placed and Order
+        //             for the following boxes
+        //             
+        //             <>
+        //             loop showing all the box information
+        //             <>
+        //
+        //             ");
         // }
         // catch (System.Exception)
         // {
         //
         //     throw;
         // }
-        //
+
 
         return RedirectToPage("./Success");
     }

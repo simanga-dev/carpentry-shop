@@ -72,6 +72,31 @@ public class DetailsModel : PageModel
             await _context.SaveChangesAsync();
         }
 
+        // try
+        // {
+        //     InternetAddressList list = new InternetAddressList();
+        //     list.Add(MailboxAddress.Parse("h3khoza@gmail.com"));
+        //
+        //     // Send Email to supervisor and requesting user
+        //     await _emailSender.SendEmailAsync(list, $" Order Placement Notification",
+        //             $@" 
+        //             Good day 
+        //
+        //             This email is to confirem that { customer.FirstName } Placed and Order
+        //             for the following boxes
+        //             
+        //             <>
+        //             loop showing all the box information
+        //             <>
+        //
+        //             ");
+        // }
+        // catch (System.Exception)
+        // {
+        //
+        //     throw;
+        // }
+
         return Page();
     }
 

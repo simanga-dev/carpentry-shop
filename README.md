@@ -34,7 +34,7 @@ localhost.
 
 ### Credential For Admin
 
-Email:      admin@localhost.com
+Email:      admin@localhost.com\
 Password:   P@$$w0r1d
 
 ### Emails
