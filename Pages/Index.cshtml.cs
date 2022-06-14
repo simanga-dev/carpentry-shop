@@ -54,6 +54,7 @@ public class IndexModel : PageModel
         _context.Orders.Add(Order);
         await _context.SaveChangesAsync();
 
+        var msbBoxList = "";
 
         // save product
         for (int i = 0; i < Boxes.Count(); i++)
@@ -68,33 +69,44 @@ public class IndexModel : PageModel
             orderBox.Order = Order;
             _context.OrderBoxes.Add(orderBox);
             await _context.SaveChangesAsync();
+
+            msbBoxList += $@"
+               Inside Width: {Boxes[i].InsideWidth} mm <br />
+               Inside Height: {Boxes[i].InsideHeight} mm <br />
+               Inside Length: {Boxes[i].InsideLength} mm <br />
+               Number of Box: {Boxes[i].Quantity} <br />
+               Required Date: {Boxes[i].ExpectedDate.ToString("dd MMMM yyyy") } <br />
+               ________________________________________________ <br />
+                ";
         }
 
-        // try
-        // {
-        //     InternetAddressList list = new InternetAddressList();
-        //     list.Add(MailboxAddress.Parse("h3khoza@gmail.com"));
-        //
-        //     // Send Email to supervisor and requesting user
-        //     await _emailSender.SendEmailAsync(list, $" Order Placement Notification",
-        //             $@" 
-        //             Good day 
-        //
-        //             This email is to confirem that { customer.FirstName } Placed and Order
-        //             for the following boxes
-        //             
-        //             <>
-        //             loop showing all the box information
-        //             <>
-        //
-        //             ");
-        // }
-        // catch (System.Exception)
-        // {
-        //
-        //     throw;
-        // }
+        try
+        {
+            InternetAddressList list = new InternetAddressList();
+            // list.Add(MailboxAddress.Parse("deneo@copalcor.co.za"));
+            list.Add(MailboxAddress.Parse("dineo@copalcor.co.za"));
+            list.Add(MailboxAddress.Parse(customer.Email));
 
+            // Send Email to supervisor and requesting user
+            await _emailSender.SendEmailAsync(list, $"[CarpentryShop] Order Placement Notification",
+                    $@"
+                    Good day
+
+                    This email is to confirm that { customer.FirstName } Place an Order <br />
+                    for the following boxes ander the department of { customer.Department }. <br />
+                    <br />
+                   
+                    Order Ref: { Order.Id } <br />
+                    <br />
+                    {msbBoxList}
+
+                    ");
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
 
         return RedirectToPage("./Success");
     }

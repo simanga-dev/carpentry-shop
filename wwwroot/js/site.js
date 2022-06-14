@@ -26,16 +26,13 @@ function addRow(type) {
         .replace(regexTwo, upperCaseType + "[" + count + "]");
 
     $('#box-' + type).append(newRow);
-    // newRow.datepicker({ dateFormat: 'MM d, yy' });
-
 
     // Needed to activate radio buttons, if required
     $('.ui.radio.checkbox').checkbox();
 
-
     showOrHideRemoveButton(type, true);
+    $('.datepicker').removeAttr('id');
     $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
-
 }
 
 
