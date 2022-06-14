@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CarpentryShop.Services;
 using CarpentryShop.Areas.Identity.Data;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("CarpentryShopIdentityDbContextConnection");
@@ -23,8 +25,19 @@ builder.Services.AddRazorPages(options =>
             options.Conventions.AuthorizePage("/Admin/Index");
         });
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.KnownProxies.Add(IPAddress.Parse("127.0.0.1"));
+});
+
+
+
 var app = builder.Build();
 
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -51,6 +64,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// using Microsoft.AspNetCore.HttpOverrides;
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -61,6 +81,5 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.MapRazorPages();
-
 
 app.Run();
