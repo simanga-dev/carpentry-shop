@@ -32,7 +32,7 @@ public class DetailsModel : PageModel
             return NotFound();
         }
 
-        Order = await _context.Orders.FirstOrDefaultAsync(m => m.Id == id);
+        Order = await _context.Orders.Include(q => q.Customer).FirstOrDefaultAsync(m => m.Id == id);
         OrderBoxes = await _context.OrderBoxes.Include(q => q.Box).Where(q => q.Order.Id == Order.Id).ToListAsync();
 
         // for (int i = 0; i < OrderBoxes.Count; i++)
