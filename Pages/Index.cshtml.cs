@@ -84,7 +84,7 @@ public class IndexModel : PageModel
         {
             InternetAddressList list = new InternetAddressList();
             // list.Add(MailboxAddress.Parse("deneo@copalcor.co.za"));
-            list.Add(MailboxAddress.Parse("hendry@copalcor.co.za"));
+            list.Add(MailboxAddress.Parse("dineo@copalcor.co.za"));
             list.Add(MailboxAddress.Parse(customer.Email));
 
 
@@ -98,7 +98,7 @@ public class IndexModel : PageModel
                     <br />
                    
                     Order Ref: { Order.Id } <br />
-                    view order information on the following link: <a href='https://{this.Request.Host}/Print?id={Order.Id}'>https://{this.Request.Host}/Print?id={Order.Id}</a>
+                    view order information on the following link: <a href='http://{this.Request.Host}/Print?id={Order.Id}'>http://{this.Request.Host}/Print?id={Order.Id}</a>
 
                     <br />
 
