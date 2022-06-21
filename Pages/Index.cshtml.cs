@@ -30,7 +30,7 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-
+            System.Console.WriteLine(this.Request.Host);
     }
 
     [BindProperty]
@@ -84,8 +84,9 @@ public class IndexModel : PageModel
         {
             InternetAddressList list = new InternetAddressList();
             // list.Add(MailboxAddress.Parse("deneo@copalcor.co.za"));
-            list.Add(MailboxAddress.Parse("dineo@copalcor.co.za"));
+            list.Add(MailboxAddress.Parse("hendry@copalcor.co.za"));
             list.Add(MailboxAddress.Parse(customer.Email));
+
 
             // Send Email to supervisor and requesting user
             await _emailSender.SendEmailAsync(list, $"[CarpentryShop] Order Placement Notification",
@@ -93,12 +94,13 @@ public class IndexModel : PageModel
                     Good day
 
                     This email is to confirm that { customer.FirstName } Place an Order <br />
-                    for the following boxes ander the department of { customer.Department }. <br />
+                    for the following boxes under the department of { customer.Department }. <br />
                     <br />
                    
                     Order Ref: { Order.Id } <br />
+                    view order information on the following link: <a href='https://{this.Request.Host}/Print?id={Order.Id}'>https://{this.Request.Host}/Print?id={Order.Id}</a>
+
                     <br />
-                    {msbBoxList}
 
                     ");
         }

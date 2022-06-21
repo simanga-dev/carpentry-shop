@@ -1,0 +1,99 @@
+@page
+@model PrintModel
+@{
+Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CarpentryShop</title>
+    <link rel="stylesheet" href="~/CarpentryShop.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/semantic-ui/semantic.min.css">
+
+    <style>
+        .table-wrapper {
+            margin: 0 2rem;
+        }
+        header {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+        <header>
+            <a class="print-logo" href="/">
+                <img class="logo-img" src="~/logo.png">
+            </a>
+
+            <div class="img-figure text-center">
+            <h2 class="header"> Order Form Carpentry Shop </h2>
+                <img style="width: 100%; max-width: 25rem" src="~/fig-1.png" />
+            </div>
+        </header>
+
+        <div class="table-wrapper">
+
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th>Box<br />Number</th>
+                        <th>Inside Length <br />(L)</th>
+                        <th>Inside Width <br />(W)</th>
+                        <th>Insde Height <br />(H) </th>
+                        <th>Lid <br /> (Yes/No)</th>
+                        <th>Foot <br /> (yes/No)</th>
+                        <th>Number of <br /> boxes</th>
+                        <th>Required Date</th>
+                        <th>Date <br /> Received</th>
+                        <th>Quantity <br /> Received</th>
+                        <th>Recieved <br /> By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.OrderBoxes.Count; i++) { <tr>
+                        <!-- <td data-label="Id">@Model.OrderBoxes[i].Box.Id.ToString().Split("-")[0]</td> -->
+                        <td data-label="Id">@(i+1)</td>
+                        <td data-label="Id">@Model.OrderBoxes[i].Box.InsideLength</td>
+                        <td data-label="Id">@Model.OrderBoxes[i].Box.InsideWidth</td>
+                        <td data-label="Id">@Model.OrderBoxes[i].Box.InsideHeight</td>
+                        <td data-label="Id">@Model.OrderBoxes[i].Box.isLid</td>
+                        <td data-label="Id">@Model.OrderBoxes[i].Box.isFoot</td>
+                        <td data-label="Id">@Model.OrderBoxes[i].Box.Quantity</td>
+                        <td data-label="Id">@Model.OrderBoxes[i].Box.ExpectedDate.ToString("dd/MM/yyyy")</td>
+                        <td data-label="Details"></td>
+                        <td data-label="Details"></td>
+                        <td data-label="Details"></td>
+                        </tr>
+                        }
+                </tbody>
+            </table>
+
+
+            <h5 class="sm-title">Requested By <Span>@Model.Order.Customer.FirstName </Span> </h5>
+            <h5 class="sm-title">Department <span>@Model.Order.Customer.Department</span></h5>
+            <h5 class="sm-title">Date of request <span>@Model.Order.Date</span></h5>
+
+        </div>
+
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/lib/semantic-ui/semantic.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+
+</html>
