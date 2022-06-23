@@ -78,6 +78,7 @@ body {
     display: none;
 }
 input {
+    -webkit-appearance: none;
     /* sh: ; */
 }
 .sm-title {
@@ -96,4 +97,15 @@ input {
 .detail-form {
     margin-top: 1rem;
 
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield !important;
 }

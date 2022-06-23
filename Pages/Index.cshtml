@@ -43,11 +43,16 @@ ViewData["Title"] = "Home page";
                     <label>Email <span class="required">*</span></label>
                     <input type="email" asp-for="Customer.Email" maxlength="255" placeholder="Enter your email">
                 </div>
-                <!-- <div class="field"> -->
-                <!--     <label>Required Date <span class="required">*</span> </label> -->
-                <!--     <input type="text" asp-for="Order.ExpectedDate" class="datepicker" maxlength="255" placeholder="Select Date"> -->
-                <!-- </div> -->
+            </div>
 
+            <div class="one fields">
+                <div class="field">
+                    <input type="file" id="fUpload" name="files" />
+                    <!-- <button class="ui teal right labeled icon button"> -->
+                    <!--     <i class="copy icon"></i> -->
+                    <!--     Add file -->
+                    <!-- </button> -->
+                </div>
             </div>
         </div>
 

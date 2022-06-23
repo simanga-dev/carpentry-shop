@@ -11,6 +11,8 @@ public class Order
     public DateTime Date { get; set; }
     [ForeignKey("CustomerId")]
     public Customer Customer { get; set; }
+    [NotMapped]
+    public IFormFile? File { set; get; }
     // public User User { get; set; }
     public Boolean isComplete { get; set; }
 

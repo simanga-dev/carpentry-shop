@@ -30,7 +30,7 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-            System.Console.WriteLine(this.Request.Host);
+
     }
 
     [BindProperty]
@@ -54,8 +54,6 @@ public class IndexModel : PageModel
         _context.Orders.Add(Order);
         await _context.SaveChangesAsync();
 
-        var msbBoxList = "";
-
         // save product
         for (int i = 0; i < Boxes.Count(); i++)
         {
@@ -70,23 +68,14 @@ public class IndexModel : PageModel
             _context.OrderBoxes.Add(orderBox);
             await _context.SaveChangesAsync();
 
-            msbBoxList += $@"
-               Inside Width: {Boxes[i].InsideWidth} mm <br />
-               Inside Height: {Boxes[i].InsideHeight} mm <br />
-               Inside Length: {Boxes[i].InsideLength} mm <br />
-               Number of Box: {Boxes[i].Quantity} <br />
-               Required Date: {Boxes[i].ExpectedDate.ToString("dd MMMM yyyy") } <br />
-               ________________________________________________ <br />
-                ";
         }
 
         try
         {
             InternetAddressList list = new InternetAddressList();
             // list.Add(MailboxAddress.Parse("deneo@copalcor.co.za"));
-            list.Add(MailboxAddress.Parse("dineo@copalcor.co.za"));
+            list.Add(MailboxAddress.Parse("hendry@copalcor.co.za"));
             list.Add(MailboxAddress.Parse(customer.Email));
-
 
             // Send Email to supervisor and requesting user
             await _emailSender.SendEmailAsync(list, $"[CarpentryShop] Order Placement Notification",
@@ -98,8 +87,8 @@ public class IndexModel : PageModel
                     <br />
                    
                     Order Ref: { Order.Id } <br />
-                    view order information on the following link: <a href='http://{this.Request.Host}/Print?id={Order.Id}'>http://{this.Request.Host}/Print?id={Order.Id}</a>
-
+                    view order information on the following <br />
+                    link: <a href='http://{this.Request.Host}/Print?id={Order.Id}'>http://{this.Request.Host}/Print?id={Order.Id}</a>
                     <br />
 
                     ");
