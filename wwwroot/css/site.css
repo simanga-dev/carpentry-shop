@@ -63,6 +63,8 @@ body {
 
 .logo .logo-img {
     height: 3.8rem !important;
+    margin: 0 auto;
+    margin-bottom: 1rem;
 }
 .check.icon {
     padding-top: 1rem;
@@ -103,6 +105,10 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none !important;
   margin: 0;
+}
+
+.gl-comb {
+    display: flex;
 }
 
 /* Firefox */
