@@ -49,12 +49,11 @@ ViewData["Title"] = "Details";
                             class="hidden none" />
                         @if (Model.OrderBoxes[i].Box.isComplete)
                         {
-                        @*
-                        <!-- <input type="checkbox" name="Items[@i].Value" checked class="hidden mark" /> -->*@
                         <p>completed</p>
-                        }else {
-                        <input type="checkbox" name="Items[@i].Value" class="mark" />
+                        } else {
                         <p>qlough</p>
+                         <input type="checkbox" name="Items[@i].Value" checked class="hidden mark" /> 
+                        <!-- <input type="checkbox" name="Items[@i].Value" class="hidden mark" /> -->
                         }
                     </td>
                     </tr>
@@ -63,8 +62,7 @@ ViewData["Title"] = "Details";
         </table>
 
 
-        <button id="login-submit" value="1" onclick="getData(this)" type="submit"
-            class="ui fluid large black submit button">Save</button>
+        <button type="submit" class="ui fluid large black submit button">Save</button>
 
     </form>
 
@@ -76,9 +74,7 @@ ViewData["Title"] = "Details";
 <script>
     async function getData() {
 
-        // I neet to crete and object here
-
-
+  /*      // I neet to crete and object here
         fetch('./Details',
             {
                 method: "POST",
@@ -99,6 +95,8 @@ ViewData["Title"] = "Details";
             .then(function (data) {console.log(data)})
 
     }
+   */
+
 </script>
 
 }
