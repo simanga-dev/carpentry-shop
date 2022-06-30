@@ -7,22 +7,13 @@ ViewData["Title"] = "Details";
 }
 
 <div class="order-table ui container">
-
-    <div class="img-figure detail text-center">
-        <h2 class="header">Order Info - Carpentry shop</h2>
-        <img style="width: 100%; max-width: 25rem" src="~/fig-1.png" />
-    </div>
-
-    <h5 class="sm-title">Requested By <Span>@Model.Order.Customer.FirstName </Span> </h5>
-    <h5 class="sm-title">Department <span>@Model.Order.Customer.Department</span></h5>
-    <h5 class="sm-title">Date of request <span>@Model.Order.Date</span></h5>
-
-    <form class="detail-form" method="post" asp-route-id="@Model.Order.Id">
+    <h3> Details of Order {blah blah}</h3>
+    <form method="post" asp-route-id="@Model.Order.Id">
         <table class="ui celled table">
             <thead>
                 <tr>
                     <th>Box Ref</th>
-                    <th>Box Number</th>
+                    <th>Description</th>
                     <th>Length</th>
                     <th>Width</th>
                     <th>Height</th>
@@ -36,7 +27,7 @@ ViewData["Title"] = "Details";
             <tbody>
                 @for (int i = 0; i < Model.OrderBoxes.Count; i++) { <tr>
                     <td data-label="Id">@Model.OrderBoxes[i].Box.Id.ToString().Split("-")[0]</td>
-                    <td data-label="Id">@(i+1)</td>
+                    <td data-label="Id">@Model.OrderBoxes[i].Box.Description</td>
                     <td data-label="Id">@Model.OrderBoxes[i].Box.InsideLength</td>
                     <td data-label="Id">@Model.OrderBoxes[i].Box.InsideWidth</td>
                     <td data-label="Id">@Model.OrderBoxes[i].Box.InsideHeight</td>
@@ -45,15 +36,13 @@ ViewData["Title"] = "Details";
                     <td data-label="Id">@Model.OrderBoxes[i].Box.Quantity</td>
                     <td data-label="Id">@Model.OrderBoxes[i].Box.ExpectedDate.ToString("dd/MM/yyyy")</td>
                     <td data-label="Details">
-                        <input type="text" name="Items[@i].Id" value="@Model.OrderBoxes[i].Box.Id"
-                            class="hidden none" />
+                        <input type="text" name="Items[@i].Id" value="@Model.OrderBoxes[i].Box.Id" class="hidden none" />
                         @if (Model.OrderBoxes[i].Box.isComplete)
                         {
+                       @* <!-- <input type="checkbox" name="Items[@i].Value" checked class="hidden mark" /> -->*@
                         <p>completed</p>
-                        } else {
-                        <p>qlough</p>
-                         <input type="checkbox" name="Items[@i].Value" checked class="hidden mark" /> 
-                        <!-- <input type="checkbox" name="Items[@i].Value" class="hidden mark" /> -->
+                        }else {
+                        <input type="checkbox" name="Items[@i].Value" class="hidden mark" />
                         }
                     </td>
                     </tr>
@@ -62,19 +51,20 @@ ViewData["Title"] = "Details";
         </table>
 
 
-        <button type="submit" class="ui fluid large black submit button">Save</button>
+        <button id="login-submit" value="1" onclick="getData(this)" type="submit"
+            class="ui fluid large black submit button">Save</button>
 
     </form>
 
 </div>
 
-
-
 @section Scripts {
 <script>
     async function getData() {
 
-  /*      // I neet to crete and object here
+        // I neet to crete and object here
+
+
         fetch('./Details',
             {
                 method: "POST",
@@ -95,8 +85,6 @@ ViewData["Title"] = "Details";
             .then(function (data) {console.log(data)})
 
     }
-   */
-
 </script>
 
 }
