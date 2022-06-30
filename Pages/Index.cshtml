@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model IndexModel
 @{
 ViewData["Title"] = "Home page";
@@ -32,33 +32,25 @@ ViewData["Title"] = "Home page";
             <div class="customer-info three fields">
                 <div class="field">
                     <label>Requested By <span class="required">*</span></label>
-                    <input id="name" type="text" asp-for="Customer.FirstName" maxlength="255"
+                    <input id="name" required type="text" asp-for="Customer.FirstName" maxlength="255"
                         placeholder="Enter your name">
                 </div>
                 <div class="field">
                     <label>Department Name <span class="required">*</span> </label>
-                    <input type="text" asp-for="Customer.Department" maxlength="20" placeholder="Enter Department">
+                    <input required type="text" asp-for="Customer.Department" maxlength="20" placeholder="Enter Department">
                 </div>
                 <div class="field">
                     <label>Email <span class="required">*</span></label>
-                    <input type="email" asp-for="Customer.Email" maxlength="255" placeholder="Enter your email">
+                    <input class="email" required type="email" asp-for="Customer.Email" maxlength="255"
+                        placeholder="Enter your email">
                 </div>
             </div>
 
-            <div class="one fields">
-                <div class="field">
-                    <input type="file" id="fUpload" name="files" />
-                    <!-- <button class="ui teal right labeled icon button"> -->
-                    <!--     <i class="copy icon"></i> -->
-                    <!--     Add file -->
-                    <!-- </button> -->
-                </div>
-            </div>
         </div>
 
 
         <div class="py-5">
-            <button id="generate" class="fluid ui button primary">
+            <button type="submit" class="fluid ui button primary">
                 Create Order
             </button>
         </div>
@@ -73,20 +65,33 @@ ViewData["Title"] = "Home page";
 
 <script>
 
-    $('.ui.form')
-        .form({
-            fields: {
-                number: {
-                    identifier: 'number',
-                    rules: [
-                        {
-                            type: 'decimal',
-                            prompt: 'Please enter a valid e-mail'
-                        }
-                    ]
-                },
-            }
-        });
+    $(function () {
+
+        $('.ui.form')
+            .form({
+                fields: {
+                    number: {
+                        identifier: 'number',
+                        rules: [
+                            {
+                                type: 'decimal',
+                                prompt: 'Please enter a valid e-mail'
+                            }
+                        ]
+                    },
+                    email: {
+                        identifier: 'email',
+                        rules: [
+                            {
+                                type: 'email',
+                                prompt: 'please please enter a valid email'
+
+                            }
+                        ]
+                    }
+                }
+            });
+    });
 
 </script>
 
