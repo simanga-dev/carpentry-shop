@@ -44,7 +44,7 @@ public class SampleData
         if (!context.Users.Any(u => u.UserName == user.UserName))
         {
             UserManager<IdentityUser> _userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
-            var results = await _userManager.CreateAsync(user, "P@ssword1");
+            var results = await _userManager.CreateAsync(user, "Dine0M@07");
         }
 
         await AssignRoles(serviceProvider, user.Email, roles);

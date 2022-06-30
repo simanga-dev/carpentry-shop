@@ -73,8 +73,8 @@ public class IndexModel : PageModel
         try
         {
             InternetAddressList list = new InternetAddressList();
-            // list.Add(MailboxAddress.Parse("deneo@copalcor.co.za"));
-            list.Add(MailboxAddress.Parse("hendry@copalcor.co.za"));
+            list.Add(MailboxAddress.Parse("deneo@copalcor.co.za"));
+            // list.Add(MailboxAddress.Parse("hendry@copalcor.co.za"));
             list.Add(MailboxAddress.Parse(customer.Email));
 
             // Send Email to supervisor and requesting user
