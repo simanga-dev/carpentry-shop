@@ -80,7 +80,7 @@ public class DetailsModel : PageModel
         {
             InternetAddressList list = new InternetAddressList();
             list.Add(MailboxAddress.Parse(Order.Customer.Email));
-            list.Add(MailboxAddress.Parse("hendry@copalcor.co.za"));
+            list.Add(MailboxAddress.Parse("dineo@copalcor.co.za"));
 
             // Send Email to supervisor and requesting user
             await _emailSender.SendEmailAsync(list, $" [CarpentryShop] Order Completion Notification",

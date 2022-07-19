@@ -1,3 +1,18 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+
+.gl-comb {
+    display: flex;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield !important;
+}
+
 .yoo {
     width: 30rem;
     /* background-color: red; */
@@ -27,10 +42,8 @@
 }
 
 .img-figure {
+
     padding-top: 3rem;
-}
-.img-figure.detail {
-    padding: 0;
 }
 
 .box-boxe {
@@ -63,8 +76,6 @@ body {
 
 .logo .logo-img {
     height: 3.8rem !important;
-    margin: 0 auto;
-    margin-bottom: 1rem;
 }
 .check.icon {
     padding-top: 1rem;
@@ -80,38 +91,6 @@ body {
     display: none;
 }
 input {
-    -webkit-appearance: none;
     /* sh: ; */
 }
-.sm-title {
-    padding: .5rem 0;
-    margin: 0;
-}
 
-.sm-title span {
-    margin-left: 2rem;
-    display: inline-block;
-    font-style: normal;
-    font-weight: normal;
-    border-bottom: 2px solid black;
-}
-
-.detail-form {
-    margin-top: 1rem;
-
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none !important;
-  margin: 0;
-}
-
-.gl-comb {
-    display: flex;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield !important;
-}
