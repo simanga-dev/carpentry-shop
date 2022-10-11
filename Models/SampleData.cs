@@ -27,24 +27,18 @@ public class SampleData
 
         var user = new IdentityUser
         {
-            // FirstName = "Admin",
-            // LastName = "User",
-            Email = "ENTER EMAIL ADDRESS HERE",
-            UserName = "ENTER EMAIL ADDRESS HERE",
-            // NormalizedEmail = "ADMIN@COPALCOR.CO.ZA",
-            // NormalizedUserName = "ADMIN@COPALCOR.CO.ZA",
-            // PhoneNumber = "+111111111111",
+            Email = "admin@localhost.com",
+            UserName = "admin@localhost.com",
             EmailConfirmed = true,
             PhoneNumberConfirmed = true,
             LockoutEnabled = false
-            // SecurityStamp = Guid.NewGuid().ToString("D")
-            //
+
         };
 
         if (!context.Users.Any(u => u.UserName == user.UserName))
         {
             UserManager<IdentityUser> _userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
-            var results = await _userManager.CreateAsync(user, "ENTER PASSWORD");
+            var results = await _userManager.CreateAsync(user, "P@$$w0r1d");
         }
 
         await AssignRoles(serviceProvider, user.Email, roles);
