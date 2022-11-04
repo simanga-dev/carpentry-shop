@@ -85,7 +85,7 @@ public class IndexModel : PageModel
                     This email is to confirm that { customer.FirstName } Place an Order <br />
                     for the following boxes under the department of { customer.Department }. <br />
                     <br />
-                   
+
                     Order Ref: { Order.Id } <br />
                     view order information on the following <br />
                     link: <a href='http://{this.Request.Host}/Print?id={Order.Id}'>http://{this.Request.Host}/Print?id={Order.Id}</a>
