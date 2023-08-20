@@ -59,8 +59,9 @@ public class IndexModel : PageModel
         {
             var orderBox = new OrderBox();
 
-            Boxes[i].Description = $"A Box of { Boxes[i].InsideLength } x { Boxes[i].InsideWidth } x { Boxes[i].InsideHeight } dimesion";
+            Boxes[i].Description = $"A Box of {Boxes[i].InsideLength} x {Boxes[i].InsideWidth} x {Boxes[i].InsideHeight} dimesion";
             _context.Boxes.Add(Boxes[i]);
+            Boxes[i].ExpectedDate = Boxes[i].ExpectedDate.ToUniversalTime();
             await _context.SaveChangesAsync();
 
             orderBox.Box = Boxes[i];
@@ -77,21 +78,21 @@ public class IndexModel : PageModel
             // list.Add(MailboxAddress.Parse("hendry@copalcor.co.za"));
             list.Add(MailboxAddress.Parse(customer.Email));
 
-            // Send Email to supervisor and requesting user
-            await _emailSender.SendEmailAsync(list, $"[CarpentryShop] Order Placement Notification",
-                    $@"
-                    Good day
+            // // Send Email to supervisor and requesting user
+            // await _emailSender.SendEmailAsync(list, $"[CarpentryShop] Order Placement Notification",
+            //         $@"
+            //         Good day
+            //
+            //         This email is to confirm that { customer.FirstName } Place an Order <br />
+            //         for the following boxes under the department of { customer.Department }. <br />
+            //         <br />
+            //
+            //         Order Ref: { Order.Id } <br />
+            //         view order information on the following <br />
+            //         link: <a href='http://{this.Request.Host}/Print?id={Order.Id}'>http://{this.Request.Host}/Print?id={Order.Id}</a>
+            //         <br />
+            //         ");
 
-                    This email is to confirm that { customer.FirstName } Place an Order <br />
-                    for the following boxes under the department of { customer.Department }. <br />
-                    <br />
-
-                    Order Ref: { Order.Id } <br />
-                    view order information on the following <br />
-                    link: <a href='http://{this.Request.Host}/Print?id={Order.Id}'>http://{this.Request.Host}/Print?id={Order.Id}</a>
-                    <br />
-
-                    ");
         }
         catch (System.Exception)
         {

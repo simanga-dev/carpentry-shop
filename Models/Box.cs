@@ -14,7 +14,7 @@ public class Box
     public Boolean isLid { get; set; }
     public Boolean isFoot { get; set; }
     public Boolean isComplete { get; set; }
-    // this does not belong here.. but hey 
+    // this does not belong here.. but hey
     public int Quantity { get; set; }
     public DateTime ExpectedDate { get; set; }
 }

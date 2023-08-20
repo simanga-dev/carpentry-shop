@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("CarpentryShopIdentityDbContextConnection");
-builder.Services.AddDbContext<CarpentryShopIdentityDbContext>(options =>
-    options.UseSqlite(connectionString));
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<CarpentryShopIdentityDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<CarpentryShopIdentityDbContext>();

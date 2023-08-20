@@ -4,9 +4,22 @@
 ViewData["Title"] = "Home page";
 }
 
+
+<div class="ui container why">
 <div class="img-figure text-center">
-    <h2 class="header">Welcome To Carpentry Shop </h2>
+    <h1 class=" ui huge header">Welcome To Carpentry Shop </h1>
     <img style="width: 100%; max-width: 25rem" src="~/fig-1.png" />
+
+<div class="ui info message">
+  <div class="header">
+  Please NOTE:
+  </div>
+  I have designed this website to demonstrate my capabilities to prospective
+  employers. To access the dashboard, please use <b>admin@localhost.com</b> and
+   as your email and password respectively. Please note, it's advisable
+  not to use your real email when completing the form."
+</div>
+</div>
 </div>
 
 <div class="ui container why">
@@ -66,7 +79,6 @@ ViewData["Title"] = "Home page";
 <script>
 
     $(function () {
-
         $('.ui.form')
             .form({
                 fields: {
