@@ -82,21 +82,22 @@ public class DetailsModel : PageModel
             list.Add(MailboxAddress.Parse(Order.Customer.Email));
             list.Add(MailboxAddress.Parse("dineo@copalcor.co.za"));
 
-            // Send Email to supervisor and requesting user
-            await _emailSender.SendEmailAsync(list, $" [CarpentryShop] Order Completion Notification",
-                    $@"
-                    Good day
+            // // Send Email to supervisor and requesting user
+            // await _emailSender.SendEmailAsync(list, $" [CarpentryShop] Order Completion Notification",
+            //         $@"
+            //         Good day
+            //
+            //         This email is to notify { Order.Customer.FirstName } from { Order.Customer.Department } <br />
+            //         That the following boxes are complete. <br />
+            //         <br />
+            //
+            //         Order Ref: { Order.Id } <br />
+            //         <br />
+            //
+            //         {msbBoxList}
+            //
+            //         ");
 
-                    This email is to notify { Order.Customer.FirstName } from { Order.Customer.Department } <br />
-                    That the following boxes are complete. <br />
-                    <br />
-
-                    Order Ref: { Order.Id } <br />
-                    <br />
-
-                    {msbBoxList}
-
-                    ");
         }
         catch (System.Exception)
         {

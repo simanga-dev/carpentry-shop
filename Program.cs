@@ -7,7 +7,17 @@ using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
+
+if(string.IsNullOrEmpty(connectionString))
+{
+    throw new Exception("DB_CONNECTION environment variable is not set");
+}
+
+builder.Services.AddDbContext<CarpentryShopIdentityDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
 builder.Services.AddDbContext<CarpentryShopIdentityDbContext>(options =>
     options.UseNpgsql(connectionString));
 
