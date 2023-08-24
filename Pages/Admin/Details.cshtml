@@ -7,7 +7,15 @@ ViewData["Title"] = "Details";
 }
 
 <div class="order-table ui container">
-    <h3> Details of Order {blah blah}</h3>
+
+
+
+<div class="ui list">
+  <div class="item"> Order ID:  <b>@Model.Order.Id</b>  </div>
+  <div class="item">Customer Email:  <b>@Model.Order.Customer.Email</b>  </div>
+  <div class="item">Customer Name:  <b>@Model.Order.Customer.FirstName</b>  </div>
+  <div class="item">Customer Departnement:  <b>@Model.Order.Customer.Department</b>  </div>
+</div>
     <form method="post" asp-route-id="@Model.Order.Id">
         <table class="ui celled table">
             <thead>

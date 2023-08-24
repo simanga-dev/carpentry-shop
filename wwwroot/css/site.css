@@ -86,6 +86,10 @@ body {
 .none {
     display: none;
 }
+.required {
+  color: red;
+}
+
 input {
     /* sh: ; */
 }
