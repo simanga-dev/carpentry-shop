@@ -13,6 +13,7 @@ input[type=number] {
   -moz-appearance: textfield !important;
 }
 
+
 .yoo {
     width: 30rem;
 }
@@ -48,8 +49,6 @@ input[type=number] {
     padding-top: 1rem;
 }
 
-label span {
-}
 
 html {
   font-size: 14px;
@@ -86,11 +85,13 @@ body {
 .none {
     display: none;
 }
+
 .required {
   color: red;
 }
 
-input {
-    /* sh: ; */
+header nav {
+  background-color: #1d1d1d;
 }
+
 
