@@ -35,7 +35,7 @@ jobs:
      - name: Install sshpass
        run: sudo apt-get install sshpass
      - name: Copy code to droplet
-       run: sshpass -v -p "${{ secrets.DROPLET_PASSWORD }}" scp -o StrictHostKeyChecking=no -r . root@${{ secrets.DROPLET_IP }}:~/code/carpentry-shop
+       run: sshpass -v -p ${{ secrets.DROPLET_PASSWORD }} scp -o StrictHostKeyChecking=no -r . root@${{ secrets.DROPLET_IP }}:~/code/carpentry-shop
 
      - name: Deploy
        uses: appleboy/ssh-action@master
