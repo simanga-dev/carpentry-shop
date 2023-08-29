@@ -35,7 +35,8 @@ jobs:
      - name: Install sshpass
        run: sudo apt-get install sshpass
      - name: Copy code to droplet
-       run: sshpass -v -p ${{ secrets.DROPLET_PASSWORD }} scp -o StrictHostKeyChecking=no -r . root@${{ secrets.DROPLET_IP }}:~/myapp
+       run: sshpass -v -p ${{ secrets.DROPLET_PASSWORD }} scp -o StrictHostKeyChecking=no -r . root@${{ secrets.DROPLET_IP }}:~/code/carpentry-shop
+
      - name: Deploy
        uses: appleboy/ssh-action@master
        with:
@@ -43,7 +44,11 @@ jobs:
          username: root
          password: ${{ secrets.DROPLET_PASSWORD }}
          script: |
-           cd ~/myapp
+           cd ~/code/carpentry-shop
            export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+           export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+           export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+           export ASPNETCORE_URLS=${{ secrets.ASPNETCORE_URLS }}
+           export DB_CONNECTION=${{ secrets.DB_CONNECTION }}
            docker-compose down
            docker-compose up -d
