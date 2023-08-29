@@ -42,7 +42,7 @@ jobs:
        with:
          host: ${{ secrets.DROPLET_IP }}
          username: root
-         password: "${{ secrets.DROPLET_PASSWORD }}"
+         password: ${{ secrets.DROPLET_PASSWORD }}
          script: |
            cd ~/code/carpentry-shop
            export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
