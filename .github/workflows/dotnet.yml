@@ -24,3 +24,26 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+
+
+  deploy:
+     needs: build
+     runs-on: ubuntu-latest
+     steps:
+     - name: Checkout code
+       uses: actions/checkout@v2
+     - name: Install sshpass
+       run: sudo apt-get install sshpass
+     - name: Copy code to droplet
+       run: sshpass -v -p ${{ secrets.DROPLET_PASSWORD }} scp -o StrictHostKeyChecking=no -r . root@${{ secrets.DROPLET_IP }}:~/myapp
+     - name: Deploy
+       uses: appleboy/ssh-action@master
+       with:
+         host: ${{ secrets.DROPLET_IP }}
+         username: root
+         password: ${{ secrets.DROPLET_PASSWORD }}
+         script: |
+           cd ~/myapp
+           export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+           docker-compose down
+           docker-compose up -d
