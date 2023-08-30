@@ -12,7 +12,7 @@ var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
 
 if(string.IsNullOrEmpty(connectionString))
 {
-    throw new Exception("DB_CONNECTION environment variable is not set");
+    throw new Exception("DB_CONNECTION environment variable is not set; Please set the environment variable");
 }
 
 builder.Services.AddDbContext<CarpentryShopIdentityDbContext>(options =>
