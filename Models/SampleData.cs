@@ -8,7 +8,7 @@ public class SampleData
     {
         var context = serviceProvider.GetService<CarpentryShopIdentityDbContext>();
 
-        string[] roles = new string[] { "Superuser", "Administrator", "Customer"};
+        string[] roles = new string[] { "Superuser", "Administrator", "Customer" };
 
         foreach (string role in roles)
         {

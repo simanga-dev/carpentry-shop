@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
 
-if(string.IsNullOrEmpty(connectionString))
+if (string.IsNullOrEmpty(connectionString))
 {
     throw new Exception("DB_CONNECTION environment variable is not set; Please set the environment variable");
 }
