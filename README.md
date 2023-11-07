@@ -3,7 +3,7 @@ This is a web application designed to manage and track the progress of
 carpentry orders. It also includes a feature that notifies the individual who
 placed the order once it has been completed.
 
-![image](https://raw.githubusercontent.com/h3ndry/carpentry-shop/docs/screenshot/homepage.png)
+![image](https://raw.githubusercontent.com/h3ndry/carpentry-shop/master/screenshot/homepage.png)
 
 *Live at* [http://178.79.147.9:8080/](http://178.79.147.9:8080/)
 
