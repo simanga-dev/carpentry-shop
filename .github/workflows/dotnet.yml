@@ -48,4 +48,5 @@ jobs:
            cd ~/code/carpentry-shop
            direnv allow
            docker-compose down
+           docker-compose build --no-cache
            docker-compose up -d
