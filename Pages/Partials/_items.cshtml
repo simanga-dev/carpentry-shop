@@ -14,22 +14,22 @@
                 <div class="four fields">
                     <div class="field">
                         <label>Inside Length <span class="required">*</span> (L) </label>
-                        <input type="number" name="Boxes[0].InsideLength" placeholder="Enter Value"
+                        <input type="number" onkeypress="return isNumberKey(event)" name="Boxes[0].InsideLength" placeholder="Enter Value"
                             required>
                     </div>
                     <div class="field">
                         <label>Inside Width <span class="required">*</span> (W)</label>
-                        <input type="number" name="Boxes[0].InsideWidth" pattern="^\d*(\.\d{0,2})?$" step="0.01" min="0"
+                        <input type="number" onkeypress="return isNumberKey(event)"  name="Boxes[0].InsideWidth" pattern="^\d*(\.\d{0,2})?$" step="0.01" min="0"
                             required placeholder="Enter value">
                     </div>
                     <div class="field">
                         <label>Inside Height <span class="required">*</span> (H)</label>
-                        <input type="number" name="Boxes[0].InsideHeight" pattern="^\d*(\.\d{0,2})?$" step="0.01"
+                        <input type="number" name="Boxes[0].InsideHeight" onkeypress="return isNumberKey(event)"  pattern="^\d*(\.\d{0,2})?$" step="0.01"
                             min="0" placeholder="Enter value">
                     </div>
                     <div class="field">
                         <label>Number of Box <span class="required">*</span> </label>
-                        <input type="number" name="Boxes[0].Quantity" pattern="^\d*(\.\d{0,2})?$" step="0.01" min="0"
+                        <input type="number" onkeypress="return isNumberKey(event)"   name="Boxes[0].Quantity" pattern="^\d*(\.\d{0,2})?$" step="0.01" min="0"
                             required placeholder="Enter value"="">
                     </div>
                 </div>
