@@ -33,6 +33,8 @@ jobs:
      steps:
      - name: Checkout code
        uses: actions/checkout@v2
+     - name: Docker Login
+       run: docker login --username ${{ secrets.USER_NAME }}  --password ${{ secrets.PASSWORD }}  ghcr.io
      - name: Build
        run: docker build . -t ghcr.io/simanga-dev/carperntry-shop:latest
      - name: push
