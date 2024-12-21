@@ -37,6 +37,6 @@ jobs:
      - name: Docker Login
        run: docker login --username ${{ secrets.USER_NAME }}  --password ${{ secrets.PASSWORD }}  ghcr.io
      - name: Build
-       run: docker build . -t ghcr.io/simanga-dev/carperntry-shop:latest
+       run: docker build . -t ghcr.io/simanga-dev/carpentry-shop:latest
      - name: push
-       run: docker push ghcr.io/simanga-dev/carperntry-shop:latest
+       run: docker push ghcr.io/simanga-dev/carpentry-shop:latest
