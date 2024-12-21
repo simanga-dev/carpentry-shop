@@ -17,7 +17,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
     - name: Install dotnet-format
       run: dotnet tool install -g dotnet-format
     - name: Check format
@@ -30,23 +30,13 @@ jobs:
   deploy:
      needs: build
      runs-on: ubuntu-latest
+     if: github.ref == 'refs/heads/master'
      steps:
      - name: Checkout code
        uses: actions/checkout@v2
-     - name: Install sshpass
-       run: sudo apt-get install sshpass
-     - name: Copy code to droplet
-       run: sshpass -v -p ${{ secrets.DROPLET_PASSWORD }} scp -o StrictHostKeyChecking=no -r * root@${{ secrets.DROPLET_IP }}:~/code/carpentry-shop
-
-     - name: Deploy
-       uses: appleboy/ssh-action@master
-       with:
-         host: ${{ secrets.DROPLET_IP }}
-         username: root
-         password: ${{ secrets.DROPLET_PASSWORD }}
-         script: |
-           cd ~/code/carpentry-shop
-           direnv allow
-           docker-compose down
-           docker-compose build --no-cache
-           docker-compose up -d
+     - name: Docker Login
+       run: docker login --username ${{ secrets.USER_NAME }}  --password ${{ secrets.PASSWORD }}  ghcr.io
+     - name: Build
+       run: docker build . -t ghcr.io/simanga-dev/carperntry-shop:latest
+     - name: push
+       run: docker push ghcr.io/simanga-dev/carperntry-shop:latest
