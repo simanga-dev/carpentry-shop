@@ -5,7 +5,7 @@ placed the order once it has been completed.
 
 ![image](https://raw.githubusercontent.com/h3ndry/carpentry-shop/master/screenshot/homepage.png)
 
-*Live at* [http://178.79.147.9:8080/](http://178.79.147.9:8080/)
+*Live at* [https://carpentry.simanga.dev/](https://carpentry.simanga.dev/)
 
 ## Features
 
