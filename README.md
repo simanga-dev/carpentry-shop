@@ -56,3 +56,11 @@ configuring Gmail for programmatic email sending. However, if you have a more
 user-friendly email provider, it will be significantly simpler to get it to
 work.
 
+### Todos
+
+- [x] Add a link to the github source code link on the homepage of the app
+- [ ] Add a Fav Icon on the address bar of the app
+- [ ] Update the application to the latest framework
+- [ ] text
+
+
