@@ -3,7 +3,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
-    <!-- &lt;!&ndash;  This line is the temp fix  &ndash;&gt; -->
+    <AllowMissingPrunePackageData>true</AllowMissingPrunePackageData>
     <UserSecretsId>aspnet-CarpentryShop-89BCD5B1-EB04-4F3F-87C0-6B750577E9DA</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
