@@ -18,9 +18,6 @@ if (string.IsNullOrEmpty(connectionString))
 builder.Services.AddDbContext<CarpentryShopIdentityDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-builder.Services.AddDbContext<CarpentryShopIdentityDbContext>(options =>
-    options.UseNpgsql(connectionString));
-
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<CarpentryShopIdentityDbContext>();
 
