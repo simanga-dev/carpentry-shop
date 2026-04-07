@@ -4,17 +4,38 @@
 default:
     @just --list
 
-# Run the app in development mode
+# Run the application
+# With Aspire CLI installed: orchestrates PostgreSQL + Web App automatically
+# Without Aspire CLI: runs main project directly (requires DB_CONNECTION env var or ConnectionStrings:carpentrydb in appsettings)
 run:
-    dotnet run
+    @if command -v aspire >/dev/null 2>&1; then \
+        echo "✓ Aspire CLI found. Running with orchestration..."; \
+        aspire run; \
+    else \
+        echo "! Aspire CLI not found. Running project directly..."; \
+        echo "  To enable Aspire orchestration with PostgreSQL container, install the CLI:"; \
+        echo "    curl -sSL https://aspire.dev/install.sh | bash"; \
+        echo ""; \
+        dotnet run --project CarpentryShop.csproj; \
+    fi
 
-# Run with hot reload
+# Run with hot reload (runs main project directly)
 watch:
-    dotnet watch run
+    dotnet watch run --project CarpentryShop.csproj
 
-# Build the project
+# Run using Aspire AppHost directly (requires Aspire CLI to be installed)
+run-aspire:
+    @echo "Note: This requires Aspire CLI to be installed."
+    @echo "      Install with: curl -sSL https://aspire.dev/install.sh | bash"
+    aspire run
+
+# Build the entire solution (including Aspire projects)
 build:
     dotnet build
+
+# Build only the main web project
+build-web:
+    dotnet build CarpentryShop.csproj
 
 # Restore NuGet packages
 restore:
@@ -55,4 +76,18 @@ docker-down:
 # Clean build artifacts
 clean:
     dotnet clean
-    rm -rf bin/ obj/
+    rm -rf bin/ obj/ CarpentryShop.AppHost/bin/ CarpentryShop.AppHost/obj/ CarpentryShop.ServiceDefaults/bin/ CarpentryShop.ServiceDefaults/obj/
+
+# Install Aspire CLI
+install-aspire:
+    curl -sSL https://aspire.dev/install.sh | bash
+
+# Check Aspire CLI status
+aspire-status:
+    @if command -v aspire >/dev/null 2>&1; then \
+        echo "✓ Aspire CLI is installed:"; \
+        aspire --version; \
+    else \
+        echo "! Aspire CLI is not installed."; \
+        echo "  Install with: just install-aspire"; \
+    fi
