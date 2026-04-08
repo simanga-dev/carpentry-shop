@@ -4,19 +4,42 @@ using CarpentryShop.Services;
 using CarpentryShop.Areas.Identity.Data;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add service defaults (Aspire)
+builder.AddServiceDefaults();
 
-var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
+// Configure PostgreSQL database connection
+// When running with Aspire, the connection string is automatically configured
+// When running standalone, it falls back to environment variable or configuration
+var connectionString = builder.Configuration.GetConnectionString("carpentrydb");
 
 if (string.IsNullOrEmpty(connectionString))
 {
-    throw new Exception("DB_CONNECTION environment variable is not set; Please set the environment variable");
+    // Fallback to legacy environment variable for backward compatibility
+    connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
+    
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        throw new Exception(
+            "Database connection not configured. Either:\n" +
+            "1. Run with Aspire: install Aspire CLI (curl -sSL https://aspire.dev/install.sh | bash) and use 'aspire run' or 'just run'\n" +
+            "2. Set DB_CONNECTION environment variable with PostgreSQL connection string\n" +
+            "3. Configure ConnectionStrings:carpentrydb in appsettings.json"
+        );
+    }
+    
+    // Register DbContext manually when not using Aspire
+    builder.Services.AddDbContext<CarpentryShopIdentityDbContext>(options =>
+        options.UseNpgsql(connectionString));
 }
-
-builder.Services.AddDbContext<CarpentryShopIdentityDbContext>(options =>
-    options.UseNpgsql(connectionString));
+else
+{
+    // Use Aspire PostgreSQL integration when connection string is provided by Aspire
+    builder.AddNpgsqlDbContext<CarpentryShopIdentityDbContext>("carpentrydb");
+}
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<CarpentryShopIdentityDbContext>();
@@ -87,5 +110,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.MapRazorPages();
+
+// Map Aspire default endpoints
+app.MapDefaultEndpoints();
 
 app.Run();
