@@ -1,13 +1,98 @@
+name: carpentry-shop
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
 services:
-  app:
-    image: carpentry-img
+  proxy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
     environment:
-       DB_CONNECTION: ${DB_CONNECTION}
-       ASPNETCORE_URLS: ${ASPNETCORE_URLS}
+      APP_DOMAIN: ${APP_DOMAIN:?Set APP_DOMAIN in .env}
+      ACME_EMAIL: ${ACME_EMAIL:?Set ACME_EMAIL in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      frontend:
+        ipv4_address: 172.30.0.2
+    depends_on:
+      app:
+        condition: service_healthy
+    logging: *logging
+
+  app:
+    image: carpentry-shop:${APP_TAG:-latest}
     build:
       context: .
       dockerfile: Dockerfile
-    # ports:
-    #   - "8080:5000"
-    # depends_on:
-      # - db
+    restart: unless-stopped
+    init: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      AllowedHosts: "${APP_DOMAIN:?Set APP_DOMAIN in .env};localhost"
+      ConnectionStrings__carpentrydb: "Host=db;Port=5432;Database=carpentrydb;Username=carpentry;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}"
+      ForwardedHeaders__KnownProxies__0: 172.30.0.2
+      Admin__Email: ${ADMIN_EMAIL:?Set ADMIN_EMAIL in .env}
+      Admin__Password: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
+    volumes:
+      - data-protection:/home/app/.aspnet/DataProtection-Keys
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    stop_grace_period: 30s
+    logging: *logging
+
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: carpentrydb
+      POSTGRES_USER: carpentry
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    logging: *logging
+
+networks:
+  frontend:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+  backend:
+    internal: true
+
+volumes:
+  postgres-data:
+  data-protection:
+  caddy-data:
+  caddy-config:

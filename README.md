@@ -49,6 +49,76 @@ $ dotnet build
 $ dotnet run
 ```
 
+## Production deployment with Docker Compose
+
+The root `docker-compose.yml` runs the .NET 10 app, PostgreSQL 17, and Caddy
+with automatic HTTPS. Aspire AppHost is used for local development, not as a
+production container. Compose supplies the same `ConnectionStrings:carpentrydb`
+configuration that Aspire supplies locally.
+
+On a single Linux server with Docker Engine and the Compose plugin:
+
+```bash
+cp .env.example .env
+chmod 600 .env
+openssl rand -hex 32
+# Edit .env with your domain, certificate email, generated database password,
+# and a unique admin email/password. Never commit .env.
+docker compose config --quiet
+docker compose up -d --build --wait
+docker compose ps
+docker compose logs --tail=100 app
+```
+
+Point your domain's DNS A record at the server. If you publish an AAAA record,
+it must also reach this server. Allow inbound TCP ports 80 and 443. These ports
+must be free for Caddy. The app and database have no host-published ports.
+The frontend subnet is `172.30.0.0/24`. If it conflicts with your network,
+change the subnet, proxy address, and `ForwardedHeaders__KnownProxies__0` together.
+
+Use a hex database password to avoid connection-string escaping problems.
+Quote admin passwords containing `$` or `#` with single quotes in `.env`.
+Environment variables are visible to Docker administrators; restrict access
+to the host and Docker socket. For stricter secret-management requirements,
+integrate a secret store rather than storing credentials in environment variables.
+
+The configured admin account is created only if it does not already exist.
+Changing `ADMIN_PASSWORD` later does not reset that account's password. Existing
+databases may still contain the old `admin@localhost.com` account with the old
+default password. Reset or remove it before exposing the deployment.
+
+Named volumes preserve PostgreSQL data, TLS certificates, and ASP.NET Core data
+protection keys across container replacements. Back them up securely. Do not use
+`docker compose down -v` unless you intend to delete them. Data protection keys
+are stored unencrypted on the volume, so protect backups and host storage.
+
+### Database backups and updates
+
+```bash
+mkdir -p backups
+chmod 700 backups
+docker compose exec -T db pg_dump -U carpentry -d carpentrydb -Fc > backups/carpentrydb.dump
+```
+
+Copy backups off the server and test restoring them. Keep the backup directory
+out of version control and the Docker build context.
+
+The app currently calls `EnsureCreated()` on startup. It can initialize a fresh
+database, but it does not apply schema changes to an existing database. Review
+and test a migration strategy before deploying schema changes. Do not blindly
+run EF migrations against a database initialized by `EnsureCreated()`.
+
+After backing up, deploy app updates with:
+
+```bash
+docker compose up -d --build --wait
+```
+
+This is a single-server deployment, not high availability. Pin image digests
+and use versioned `APP_TAG` values for controlled releases. Schedule image
+updates and off-server backups. The Aspire dashboard is deliberately not
+deployed or publicly exposed, and telemetry is not retained by this setup.
+
 ## Emails
 
 The email functionality has been disabled due to the complexities involved in
@@ -62,5 +132,4 @@ work.
 - [ ] Add a Fav Icon on the address bar of the app
 - [ ] Update the application to the latest framework
 - [ ] text
-
 
