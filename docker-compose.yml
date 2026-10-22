@@ -7,27 +7,6 @@ x-logging: &logging
     max-file: "3"
 
 services:
-  proxy:
-    image: caddy:2.10-alpine
-    restart: unless-stopped
-    environment:
-      APP_DOMAIN: ${APP_DOMAIN:?Set APP_DOMAIN in .env}
-      ACME_EMAIL: ${ACME_EMAIL:?Set ACME_EMAIL in .env}
-    ports:
-      - "${APP_BIND_ADDRESS:-127.0.0.1}:80:80"
-      - "${APP_BIND_ADDRESS:-127.0.0.1}:443:443"
-    volumes:
-      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy-data:/data
-      - caddy-config:/config
-    networks:
-      frontend:
-        ipv4_address: 172.30.0.2
-    depends_on:
-      app:
-        condition: service_healthy
-    logging: *logging
-
   app:
     image: carpentry-shop:${APP_TAG:-latest}
     build:
@@ -40,16 +19,15 @@ services:
       ASPNETCORE_URLS: http://+:8080
       AllowedHosts: "${APP_DOMAIN:?Set APP_DOMAIN in .env};localhost"
       ConnectionStrings__carpentrydb: "Host=db;Port=5432;Database=carpentrydb;Username=carpentry;Password=${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}"
-      ForwardedHeaders__KnownProxies__0: 172.30.0.2
+      ForwardedHeaders__TrustAllProxies: "true"
       Admin__Email: ${ADMIN_EMAIL:?Set ADMIN_EMAIL in .env}
       Admin__Password: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
+    expose:
+      - "8080"
     volumes:
       - data-protection:/home/app/.aspnet/DataProtection-Keys
     networks:
-      # Pinned so the app cannot claim the proxy's static address on startup
-      frontend:
-        ipv4_address: 172.30.0.3
-      backend:
+      - backend
     depends_on:
       db:
         condition: service_healthy
@@ -86,15 +64,9 @@ services:
     logging: *logging
 
 networks:
-  frontend:
-    ipam:
-      config:
-        - subnet: 172.30.0.0/24
   backend:
     internal: true
 
 volumes:
   postgres-data:
   data-protection:
-  caddy-data:
-  caddy-config:

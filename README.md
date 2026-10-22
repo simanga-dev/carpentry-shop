@@ -49,41 +49,41 @@ $ dotnet build
 $ dotnet run
 ```
 
-## Production deployment with Docker Compose
+## Production deployment with Dokploy
 
-The root `docker-compose.yml` runs the .NET 10 app, PostgreSQL 17, and Caddy
-with automatic HTTPS. Aspire AppHost is used for local development, not as a
-production container. Compose supplies the same `ConnectionStrings:carpentrydb`
-configuration that Aspire supplies locally.
+The root `docker-compose.yml` runs the .NET 10 app and PostgreSQL 17. Dokploy's
+Traefik proxy handles the public host and TLS, so the stack has no reverse proxy
+container and publishes no host ports. Aspire AppHost is used for local
+development, not as a production container.
 
-On a single Linux server with Docker Engine and the Compose plugin:
+Create a Docker Compose service in Dokploy that points at this repository, set
+the compose path to `docker-compose.yml`, and add these environment variables in
+the Environment tab:
 
 ```bash
-just env            # or: ./deploy/init-env.sh
-# Edit .env before a public deployment: APP_DOMAIN, ACME_EMAIL,
-# ADMIN_EMAIL, ADMIN_PASSWORD, and APP_BIND_ADDRESS. Never commit .env.
-docker compose config --quiet
-docker compose up -d --build --wait
-docker compose ps
-docker compose logs --tail=100 app
+APP_DOMAIN=carpentry.simanga.dev
+POSTGRES_PASSWORD=<openssl rand -hex 32>
+ADMIN_EMAIL=admin@simanga.dev
+ADMIN_PASSWORD=<unique password>
 ```
 
-`just env` fills `.env` with a random database password and admin password and
-prints the admin credentials once. It never overwrites an existing `.env`. If you
-prefer to do it by hand, copy `.env.example` and fill in every value; Compose
-refuses to start while a required value is empty.
+`just env` or `./deploy/init-env.sh` generates a `.env` with the same keys for
+local use. On Dokploy, paste the values into the UI. Compose refuses to start
+while a required value is empty.
 
-Caddy publishes ports 80 and 443 on `127.0.0.1` by default, so the stack is
-reachable only from the host. On a public server set `APP_BIND_ADDRESS=0.0.0.0`
-in `.env` so Caddy can answer on the domain and complete the ACME challenge.
+In the Domains tab, add one domain:
 
-Point your domain's DNS A record at the server. If you publish an AAAA record,
-it must also reach this server. With `APP_BIND_ADDRESS=0.0.0.0`, allow inbound
-TCP ports 80 and 443. These ports must be free for Caddy. The app and database
-have no host-published ports.
-The frontend subnet is `172.30.0.0/24`. If it conflicts with your network,
-change the subnet, the proxy and app addresses, and
-`ForwardedHeaders__KnownProxies__0` together.
+- Host: `carpentry.simanga.dev`
+- Service: `app`
+- Container port: `8080`
+- HTTPS: on, Let's Encrypt
+
+Redeploy after changing domains. Do not publish ports for the app; Traefik
+reaches `app:8080` over the platform network.
+
+The app trusts `X-Forwarded-*` headers from the platform proxy, so redirects and
+generated links use `https` and the public host. `AllowedHosts` accepts
+`APP_DOMAIN` and `localhost`.
 
 Use a hex database password to avoid connection-string escaping problems.
 Quote admin passwords containing `$` or `#` with single quotes in `.env`.
@@ -96,8 +96,8 @@ Changing `ADMIN_PASSWORD` later does not reset that account's password. Existing
 databases may still contain the old `admin@localhost.com` account with the old
 default password. Reset or remove it before exposing the deployment.
 
-Named volumes preserve PostgreSQL data, TLS certificates, and ASP.NET Core data
-protection keys across container replacements. Back them up securely. Do not use
+Named volumes preserve PostgreSQL data and ASP.NET Core data protection keys
+across container replacements. Back them up securely. Do not use
 `docker compose down -v` unless you intend to delete them. Data protection keys
 are stored unencrypted on the volume, so protect backups and host storage.
 
@@ -117,7 +117,8 @@ database, but it does not apply schema changes to an existing database. Review
 and test a migration strategy before deploying schema changes. Do not blindly
 run EF migrations against a database initialized by `EnsureCreated()`.
 
-After backing up, deploy app updates with:
+After backing up, deploy app updates by pushing to the branch Dokploy tracks
+and clicking Redeploy, or by running:
 
 ```bash
 docker compose up -d --build --wait
