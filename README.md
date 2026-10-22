@@ -77,7 +77,8 @@ Point your domain's DNS A record at the server. If you publish an AAAA record,
 it must also reach this server. Allow inbound TCP ports 80 and 443. These ports
 must be free for Caddy. The app and database have no host-published ports.
 The frontend subnet is `172.30.0.0/24`. If it conflicts with your network,
-change the subnet, proxy address, and `ForwardedHeaders__KnownProxies__0` together.
+change the subnet, the proxy and app addresses, and
+`ForwardedHeaders__KnownProxies__0` together.
 
 Use a hex database password to avoid connection-string escaping problems.
 Quote admin passwords containing `$` or `#` with single quotes in `.env`.

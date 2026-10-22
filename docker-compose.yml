@@ -46,8 +46,10 @@ services:
     volumes:
       - data-protection:/home/app/.aspnet/DataProtection-Keys
     networks:
-      - frontend
-      - backend
+      # Pinned so the app cannot claim the proxy's static address on startup
+      frontend:
+        ipv4_address: 172.30.0.3
+      backend:
     depends_on:
       db:
         condition: service_healthy

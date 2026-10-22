@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Nested build output must never overwrite restore assets inside the image
+**/obj/
+**/bin/
+
 # User-specific files
 *.rsuser
 *.suo
