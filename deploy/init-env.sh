@@ -49,6 +49,7 @@ cat >"$env_file" <<EOF
 APP_DOMAIN=$domain
 ACME_EMAIL=$acme_email
 APP_TAG=latest
+APP_BIND_ADDRESS=${APP_BIND_ADDRESS:-127.0.0.1}
 POSTGRES_PASSWORD=$(openssl rand -hex 32)
 ADMIN_EMAIL=$admin_email
 ADMIN_PASSWORD=$admin_password
