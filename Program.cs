@@ -58,6 +58,13 @@ builder.Services.AddRazorPages(options =>
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    if (builder.Configuration.GetValue<bool>("ForwardedHeaders:TrustAllProxies"))
+    {
+        options.KnownProxies.Clear();
+        options.KnownIPNetworks.Clear();
+        return;
+    }
+
     foreach (var proxy in builder.Configuration.GetSection("ForwardedHeaders:KnownProxies").GetChildren())
     {
         options.KnownProxies.Add(IPAddress.Parse(proxy.Value!));

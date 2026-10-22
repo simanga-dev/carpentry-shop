@@ -5,7 +5,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 env_file="$repo_root/.env"
-required_keys=(APP_DOMAIN ACME_EMAIL POSTGRES_PASSWORD ADMIN_EMAIL ADMIN_PASSWORD)
+required_keys=(APP_DOMAIN POSTGRES_PASSWORD ADMIN_EMAIL ADMIN_PASSWORD)
 
 read_value() {
     local key="$1"
@@ -33,12 +33,11 @@ fi
 
 domain="${APP_DOMAIN:-}"
 if [[ -z "$domain" && -t 0 ]]; then
-    read -r -p "Public domain for Caddy [localhost]: " domain
+    read -r -p "Public domain [localhost]: " domain
 fi
 domain="${domain:-localhost}"
 
 admin_email="${ADMIN_EMAIL:-admin@${domain}}"
-acme_email="${ACME_EMAIL:-$admin_email}"
 
 # ASP.NET Core Identity requires upper, lower, digit, and symbol characters.
 # The literal prefix satisfies those rules; the random suffix provides entropy.
@@ -47,9 +46,7 @@ admin_password="Admin-$(openssl rand -hex 16)"
 umask 077
 cat >"$env_file" <<EOF
 APP_DOMAIN=$domain
-ACME_EMAIL=$acme_email
 APP_TAG=latest
-APP_BIND_ADDRESS=${APP_BIND_ADDRESS:-127.0.0.1}
 POSTGRES_PASSWORD=$(openssl rand -hex 32)
 ADMIN_EMAIL=$admin_email
 ADMIN_PASSWORD=$admin_password
@@ -61,5 +58,5 @@ echo "  APP_DOMAIN=$domain"
 echo "  ADMIN_EMAIL=$admin_email"
 echo "  ADMIN_PASSWORD=$admin_password"
 echo
-echo "For a public deployment, set APP_DOMAIN and ACME_EMAIL to real values,"
-echo "point DNS at this host, and open TCP ports 80 and 443."
+echo "For a public deployment, set APP_DOMAIN and ADMIN_EMAIL to real values"
+echo "and point DNS at the host running your proxy."
