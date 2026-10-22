@@ -20,7 +20,7 @@ if (string.IsNullOrEmpty(connectionString))
 {
     // Fallback to legacy environment variable for backward compatibility
     connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
-    
+
     if (string.IsNullOrEmpty(connectionString))
     {
         throw new Exception(
@@ -30,7 +30,7 @@ if (string.IsNullOrEmpty(connectionString))
             "3. Configure ConnectionStrings:carpentrydb in appsettings.json"
         );
     }
-    
+
     // Register DbContext manually when not using Aspire
     builder.Services.AddDbContext<CarpentryShopIdentityDbContext>(options =>
         options.UseNpgsql(connectionString));
