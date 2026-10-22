@@ -61,7 +61,7 @@ On a single Linux server with Docker Engine and the Compose plugin:
 ```bash
 just env            # or: ./deploy/init-env.sh
 # Edit .env before a public deployment: APP_DOMAIN, ACME_EMAIL,
-# ADMIN_EMAIL, and ADMIN_PASSWORD. Never commit .env.
+# ADMIN_EMAIL, ADMIN_PASSWORD, and APP_BIND_ADDRESS. Never commit .env.
 docker compose config --quiet
 docker compose up -d --build --wait
 docker compose ps
@@ -73,9 +73,14 @@ prints the admin credentials once. It never overwrites an existing `.env`. If yo
 prefer to do it by hand, copy `.env.example` and fill in every value; Compose
 refuses to start while a required value is empty.
 
+Caddy publishes ports 80 and 443 on `127.0.0.1` by default, so the stack is
+reachable only from the host. On a public server set `APP_BIND_ADDRESS=0.0.0.0`
+in `.env` so Caddy can answer on the domain and complete the ACME challenge.
+
 Point your domain's DNS A record at the server. If you publish an AAAA record,
-it must also reach this server. Allow inbound TCP ports 80 and 443. These ports
-must be free for Caddy. The app and database have no host-published ports.
+it must also reach this server. With `APP_BIND_ADDRESS=0.0.0.0`, allow inbound
+TCP ports 80 and 443. These ports must be free for Caddy. The app and database
+have no host-published ports.
 The frontend subnet is `172.30.0.0/24`. If it conflicts with your network,
 change the subnet, the proxy and app addresses, and
 `ForwardedHeaders__KnownProxies__0` together.

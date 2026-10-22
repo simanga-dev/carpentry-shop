@@ -14,8 +14,8 @@ services:
       APP_DOMAIN: ${APP_DOMAIN:?Set APP_DOMAIN in .env}
       ACME_EMAIL: ${ACME_EMAIL:?Set ACME_EMAIL in .env}
     ports:
-      - "80:80"
-      - "443:443"
+      - "${APP_BIND_ADDRESS:-127.0.0.1}:80:80"
+      - "${APP_BIND_ADDRESS:-127.0.0.1}:443:443"
     volumes:
       - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
