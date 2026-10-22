@@ -6,6 +6,20 @@ public class SampleData
 {
     public static async Task InitializeAsync(IServiceProvider serviceProvider)
     {
+        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+        var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+        var adminEmail = configuration["Admin:Email"];
+        var adminPassword = configuration["Admin:Password"];
+        if (environment.IsDevelopment())
+        {
+            adminEmail ??= "admin@localhost.com";
+            adminPassword ??= "@Password1";
+        }
+        if (string.IsNullOrWhiteSpace(adminEmail) || string.IsNullOrWhiteSpace(adminPassword))
+        {
+            throw new InvalidOperationException("Configure Admin:Email and Admin:Password before starting in production.");
+        }
+
         var context = serviceProvider.GetService<CarpentryShopIdentityDbContext>();
 
         string[] roles = new string[] { "Superuser", "Administrator", "Customer" };
@@ -27,8 +41,8 @@ public class SampleData
 
         var user = new IdentityUser
         {
-            Email = "admin@localhost.com",
-            UserName = "admin@localhost.com",
+            Email = adminEmail,
+            UserName = adminEmail,
             EmailConfirmed = true,
             PhoneNumberConfirmed = true,
             LockoutEnabled = false
@@ -38,7 +52,12 @@ public class SampleData
         if (!context.Users.Any(u => u.UserName == user.UserName))
         {
             UserManager<IdentityUser> _userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
-            var results = await _userManager.CreateAsync(user, "@Password1");
+            var results = await _userManager.CreateAsync(user, adminPassword);
+            if (!results.Succeeded)
+            {
+                throw new InvalidOperationException("Admin creation failed: " +
+                    string.Join("; ", results.Errors.Select(error => error.Description)));
+            }
         }
 
         await AssignRoles(serviceProvider, user.Email, roles);
