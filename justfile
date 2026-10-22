@@ -61,16 +61,20 @@ db-status:
 migrate-remove:
     dotnet ef migrations remove
 
+# Create .env with generated secrets (safe to rerun)
+env:
+    ./deploy/init-env.sh
+
 # Build the Docker image
-docker-build:
+docker-build: env
     docker compose build
 
 # Run with Docker Compose
-docker-up:
+docker-up: env
     docker compose up
 
 # Stop Docker Compose
-docker-down:
+docker-down: env
     docker compose down
 
 # Clean build artifacts

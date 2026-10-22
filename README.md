@@ -59,16 +59,19 @@ configuration that Aspire supplies locally.
 On a single Linux server with Docker Engine and the Compose plugin:
 
 ```bash
-cp .env.example .env
-chmod 600 .env
-openssl rand -hex 32
-# Edit .env with your domain, certificate email, generated database password,
-# and a unique admin email/password. Never commit .env.
+just env            # or: ./deploy/init-env.sh
+# Edit .env before a public deployment: APP_DOMAIN, ACME_EMAIL,
+# ADMIN_EMAIL, and ADMIN_PASSWORD. Never commit .env.
 docker compose config --quiet
 docker compose up -d --build --wait
 docker compose ps
 docker compose logs --tail=100 app
 ```
+
+`just env` fills `.env` with a random database password and admin password and
+prints the admin credentials once. It never overwrites an existing `.env`. If you
+prefer to do it by hand, copy `.env.example` and fill in every value; Compose
+refuses to start while a required value is empty.
 
 Point your domain's DNS A record at the server. If you publish an AAAA record,
 it must also reach this server. Allow inbound TCP ports 80 and 443. These ports
